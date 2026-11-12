@@ -206,6 +206,16 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .team .stat2{grid-column:1 / -1;font:400 12px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ceniza)}
   .team-label{margin:36px 0 12px;font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ceniza)}
   .team-label:first-child{margin-top:0}
+  .club-epic{font:italic 400 clamp(26px,3vw,40px)/1.18 var(--serif);color:var(--hueso);max-width:20ch;margin-top:26px;text-wrap:balance}
+  .club-figs{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,18px);align-self:center}
+  .club-figs li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:24px 10px 20px;background:var(--hierro);border:1px solid var(--line);border-top:3px solid var(--tone)}
+  .club-figs .avatar{width:80px;height:80px;margin-bottom:10px;overflow:visible}
+  .club-figs .ring-a{fill:color-mix(in srgb,var(--tone) 10%,transparent);stroke:var(--tone);stroke-width:1}
+  .club-figs .glyph-a{fill:none;stroke:var(--tone);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .club-figs strong{font:500 17px/1.2 var(--serif);color:var(--hueso)}
+  .club-figs em{font-style:normal;font-size:13px;color:var(--ceniza);line-height:1.35}
+  .club-figs .soc{margin-top:8px;font:400 11px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--tone)}
+  @media (max-width:560px){.club-figs{grid-template-columns:1fr}}
   .dept .links{margin-top:32px;display:flex;flex-wrap:wrap;gap:4px 36px}
   .tl{display:inline-flex;gap:10px;padding:14px 0;font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--hueso);border-bottom:1px solid var(--line-strong);transition:color .3s var(--ease-ui),border-color .3s var(--ease-ui),transform .2s var(--ease-ui)}
   .tl:active{transform:scale(.97)}
@@ -481,27 +491,23 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
       </div>
     </details>
   </section>
-  <section class="wrap dept" id="departamento" aria-labelledby="dept-title">
+  <section class="wrap dept" id="club" aria-labelledby="dept-title">
     <div class="dept-grid">
       <div>
         <p class="eyebrow mono rv">Club Kongzhi UNMSM</p>
-        <h2 id="dept-title" class="rv" style="--d:.06s">Departamento de Investigación</h2>
-        <p class="lead rv" style="--d:.1s">Quienes investigan, verifican y escriben las fichas de Forja y los cuadernos de Nalanda. Si quieres corregirnos, proponer una guerra, colaborar o invitarnos a conversar, escríbenos.</p>
-        <div class="links rv" style="--d:.14s">
-          <a class="tl" href="https://renzo34990.github.io/gengis-biblioteca/#departamento-de-investigacion" target="_blank" rel="noopener">Conocer al equipo en Nalanda <span aria-hidden="true">→</span></a>
+        <h2 id="dept-title" class="rv" style="--d:.06s">El Club</h2>
+        <p class="club-epic rv" style="--d:.1s">Somos el puente entre Asia y el mundo universitario peruano.</p>
+        <p class="lead rv" style="--d:.14s">Donde otros ven un continente lejano, el Club Kongzhi ve el siguiente capítulo de nuestra región. Lo estudia con rigor, lo cuenta con claridad y lo trae de vuelta a las aulas de San Marcos: de Lima a Pekín, de Tokio a Seúl, de la historia que pasó a las decisiones que vienen.</p>
+        <div class="links rv" style="--d:.18s">
+          <a class="tl" href="https://renzo34990.github.io/pr-landing/departamento/" target="_blank" rel="noopener">Departamento de Investigación <span aria-hidden="true">→</span></a>
           <a class="tl" href="https://www.instagram.com/clubkongzhi/" target="_blank" rel="noopener">Instagram del club <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      <div class="rv" style="--d:.1s">
-        <p class="team-label">Equipo del Departamento</p>
-        <ul class="team">
-          <li><span class="who">Renzo</span><span class="role">Director de Investigación</span><span class="stat2">LinkedIn / por añadir</span></li>
-        </ul>
-        <p class="team-label">Investigadores de Forja</p>
-        <ul class="team">
-          <li><span class="who">Próximamente</span><span class="role">Un investigador por guerra, con su nombre en la ficha</span></li>
-        </ul>
-      </div>
+      <ul class="club-figs rv" style="--d:.12s" aria-label="Principales contribuyentes">
+<li class="fig" style="--tone:#C9A63E"><svg class="avatar" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30.5" class="ring-a"/><g class="glyph-a"><circle cx="32" cy="23" r="8.5"/><path d="M14 57c0-12.5 8-20 18-20s18 7.5 18 20"/><circle cx="47" cy="43" r="5.5"/><path d="M51 47l6 6"/></g></svg><strong>Renzo</strong><em>Director de Investigación</em><span class="soc">LinkedIn · por añadir</span></li>
+<li class="fig" style="--tone:#D26A55"><svg class="avatar" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30.5" class="ring-a"/><g class="glyph-a"><circle cx="32" cy="23" r="8.5"/><path d="M14 57c0-12.5 8-20 18-20s18 7.5 18 20"/><path d="M22 49c4-2 7-2 10 0 3-2 6-2 10 0v7c-4-2-7-2-10 0-3-2-6-2-10 0z"/></g></svg><strong>Nombre por añadir</strong><em>Investigador</em><span class="soc">LinkedIn o Instagram · por añadir</span></li>
+<li class="fig" style="--tone:#7A9E8E"><svg class="avatar" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30.5" class="ring-a"/><g class="glyph-a"><circle cx="32" cy="23" r="8.5"/><path d="M14 57c0-12.5 8-20 18-20s18 7.5 18 20"/><path d="M24 55v-6M32 55v-10M40 55v-8"/></g></svg><strong>Nombre por añadir</strong><em>Investigador</em><span class="soc">LinkedIn o Instagram · por añadir</span></li>
+      </ul>
     </div>
   </section>
 </main>
