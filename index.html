@@ -120,29 +120,10 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .strata path.l:nth-child(3n){transform:translate(30px,7px)}
   .strata path.l:nth-child(5n){transform:translate(-46px,2px)}
   h1{position:relative}
-  h1::before,h1::after{content:attr(data-t);position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;opacity:0}
-  h1::before{color:transparent;-webkit-text-stroke:2px var(--brasa);transform:translate(.022em,.018em);z-index:-1}
-  h1::after{color:var(--hueso);clip-path:inset(0 0 100% 0)}
-  .hero-go h1::before{opacity:.7;transition:opacity .2s linear 1s;animation:jit 6.4s steps(1,end) 2.4s infinite}
-  .hero-go h1::after{opacity:1;animation:tear 6.4s steps(1,end) 2.4s infinite}
-  @keyframes tear{
-    0%,86%{clip-path:inset(0 0 100% 0);transform:none}
-    86.5%{clip-path:inset(16% 0 64% 0);transform:translateX(-.05em)}
-    88.5%{clip-path:inset(54% 0 26% 0);transform:translateX(.06em)}
-    90.5%{clip-path:inset(72% 0 6% 0);transform:translateX(-.035em)}
-    92.5%{clip-path:inset(30% 0 52% 0);transform:translateX(.03em)}
-    94%,100%{clip-path:inset(0 0 100% 0);transform:none}}
-  @keyframes jit{0%,86%{transform:translate(.022em,.018em)}87%{transform:translate(.07em,-.01em)}90%{transform:translate(-.03em,.04em)}93%{transform:translate(.045em,.025em)}94%,100%{transform:translate(.022em,.018em)}}
-  /* Cintas de fechas */
-  .tapes{position:relative;height:178px;overflow:hidden;margin-top:-6px}
-  .tape{position:absolute;left:-6%;width:112%;overflow:hidden;white-space:nowrap}
-  .tape .trk{display:flex;width:max-content;animation:run 46s linear infinite}
-  .tape span{display:inline-block;padding-right:2.2em}
-  .tape span b{font-weight:600;margin-right:.7em}
-  .t1{top:34px;transform:rotate(-1.6deg);background:var(--brasa);color:var(--carbon);font:600 22px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;padding:13px 0;box-shadow:0 10px 40px rgba(224,121,60,.25)}
-  .t2{top:92px;transform:rotate(1.2deg);background:#0D0B0A;color:var(--escoria);font:400 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;padding:14px 0;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
-  .t2 .trk{animation-direction:reverse;animation-duration:64s}
-  @keyframes run{to{transform:translateX(-50%)}}
+  h1::before{content:attr(data-t);position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none;opacity:0;color:transparent;-webkit-text-stroke:2px var(--brasa);transform:translate(.022em,.018em);z-index:-1}
+  .hero-go h1::before{opacity:.7;transition:opacity .2s linear 1s}
+  .hero-go h1.crumbling::before{opacity:.22;transition:opacity .6s linear}
+  .sh{position:absolute;will-change:transform}
   /* Fichas fracturadas */
   .grid{padding-bottom:56px}
   .card{clip-path:polygon(0 0,100% 0,100% calc(100% - 24px),calc(100% - 24px) 100%,0 100%)}
@@ -157,8 +138,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .num{font-size:38px}
   footer{border-top-color:rgba(224,121,60,.4)}
   @media (prefers-reduced-motion:reduce){
-    .tape .trk,.heat,h1::before,h1::after{animation:none!important}
-    h1::after{display:none}
+    .heat,h1::before{animation:none!important}
     .embers{display:none}
   }
 
@@ -254,8 +234,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
 <body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 <div class="intro" id="intro" aria-hidden="true">
-  <div class="half top"><div class="word"><span class="im"><span style="--i:0">F</span></span><span class="im"><span style="--i:1">O</span></span><span class="im"><span style="--i:2">R</span></span><span class="im"><span style="--i:3">J</span></span><span class="im"><span style="--i:4">A</span></span></div></div>
-  <div class="half bot"><div class="word"><span class="im"><span style="--i:0">F</span></span><span class="im"><span style="--i:1">O</span></span><span class="im"><span style="--i:2">R</span></span><span class="im"><span style="--i:3">J</span></span><span class="im"><span style="--i:4">A</span></span></div></div>
+  <div class="half top"></div>
+  <div class="half bot"></div>
   <span class="fault"></span>
   <span class="skip">Pulsa para entrar</span>
 </div>
@@ -298,11 +278,6 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
       <p class="lead rvh" style="--d:.2s">Estudiamos los conflictos para comprender el poder, reconocer el sacrificio y entender cómo las civilizaciones construyen, o destruyen, su futuro. Cada guerra se lee como una decisión con precio, y como una herencia que recibe la generación siguiente.</p>
     </div>
   </section>
-
-  <div class="tapes" aria-hidden="true">
-    <div class="tape t1"><div class="trk"><span><b>1839</b>Guerras del Opio</span><span><b>1894</b>Guerra Sino-Japonesa</span><span><b>1904</b>Guerra Ruso-Japonesa</span><span><b>1931</b>Invasión de Manchuria</span><span><b>1937</b>Segunda Guerra Sino-Japonesa</span><span><b>1941</b>Guerra del Pacífico</span><span><b>1945</b>Guerra Civil China</span><span><b>1950</b>Guerra de Corea</span><span><b>1954</b>Primera crisis del Estrecho</span><span><b>1955</b>Guerra de Vietnam</span><span><b>1962</b>Guerra Sino-India</span><span><b>1979</b>Guerra Sino-Vietnamita</span><span><b>1995</b>Crisis del Estrecho de Taiwán</span><span><b>2010</b>Yeonpyeong y Cheonan</span><span><b>2018</b>Guerra comercial EE. UU. y China</span><span><b>1839</b>Guerras del Opio</span><span><b>1894</b>Guerra Sino-Japonesa</span><span><b>1904</b>Guerra Ruso-Japonesa</span><span><b>1931</b>Invasión de Manchuria</span><span><b>1937</b>Segunda Guerra Sino-Japonesa</span><span><b>1941</b>Guerra del Pacífico</span><span><b>1945</b>Guerra Civil China</span><span><b>1950</b>Guerra de Corea</span><span><b>1954</b>Primera crisis del Estrecho</span><span><b>1955</b>Guerra de Vietnam</span><span><b>1962</b>Guerra Sino-India</span><span><b>1979</b>Guerra Sino-Vietnamita</span><span><b>1995</b>Crisis del Estrecho de Taiwán</span><span><b>2010</b>Yeonpyeong y Cheonan</span><span><b>2018</b>Guerra comercial EE. UU. y China</span></div></div>
-    <div class="tape t2"><div class="trk"><span>Zona en disputa</span><span>Lo que se heredó</span><span>Archivo abierto</span><span>Toda guerra tiene un precio</span><span>Fronteras que se reescriben</span><span>Decisiones con consecuencias</span><span>Zona en disputa</span><span>Lo que se heredó</span><span>Archivo abierto</span><span>Toda guerra tiene un precio</span><span>Fronteras que se reescriben</span><span>Decisiones con consecuencias</span></div></div>
-  </div>
 
   <section class="wrap" id="metodo" aria-label="Cómo se lee cada ficha">
     <div class="method">
@@ -585,6 +560,74 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
     raf = requestAnimationFrame(tick);
   })();
 
+  // Derrumbe: el titulo se desmorona de a pocos, como un muro viejo, y se vuelve a forjar
+  (function(){
+    var h1 = document.getElementById('titulo'), hero = document.getElementById('inicio');
+    if(!h1 || !hero || reduce || !h1.animate) return;
+    var masks = [].slice.call(h1.querySelectorAll('.mask')), vis = true, busy = false;
+    if('IntersectionObserver' in window) new IntersectionObserver(function(e){ vis = e[0].isIntersecting; }).observe(hero);
+    var layer = document.createElement('span'); layer.setAttribute('aria-hidden','true'); layer.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none'; h1.appendChild(layer);
+    function r(a,b){ return a + Math.random()*(b-a); }
+    function cl(v){ return Math.max(0, Math.min(100, v)); }
+    function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function polys(){
+      var B=[cl(38+r(-9,9)),0], E=[cl(44+r(-9,9)),cl(32+r(-7,7))], H=[cl(52+r(-9,9)),cl(66+r(-7,7))], K=[cl(36+r(-9,9)),100],
+          D=[0,cl(34+r(-7,7))], F=[100,cl(40+r(-7,7))], G=[0,cl(68+r(-7,7))], I=[100,cl(70+r(-7,7))], A=[0,0], C=[100,0], J=[0,100], L=[100,100];
+      return [[A,B,E,D],[B,C,F,E],[D,E,H,G],[E,F,I,H],[G,H,K,J],[H,I,L,K]].map(function(p){ return 'polygon(' + p.map(function(q){ return q[0].toFixed(1)+'% '+q[1].toFixed(1)+'%'; }).join(',') + ')'; });
+    }
+    function build(m){
+      var out = [], P = polys();
+      P.forEach(function(cp){
+        var w = document.createElement('span'); w.className = 'sh';
+        w.style.cssText = 'left:'+m.offsetLeft+'px;top:'+m.offsetTop+'px;width:'+m.offsetWidth+'px;height:'+m.offsetHeight+'px;clip-path:'+cp;
+        var c = m.cloneNode(true); c.style.cssText = 'position:absolute;left:0;top:0;margin:0';
+        var sp = c.firstElementChild; sp.style.animation = 'none'; sp.style.transform = 'none';
+        w.appendChild(c); layer.appendChild(w); out.push(w);
+      });
+      return out;
+    }
+    function fall(w, delay){
+      var d = 1500 + r(0,700), dx = r(-34,34), dy = r(260,560) + h1.offsetHeight*.25, rot = r(-38,38);
+      var j = function(){ return 'translate('+r(-1.6,1.6).toFixed(1)+'px,'+r(0,2).toFixed(1)+'px) rotate('+r(-.8,.8).toFixed(2)+'deg)'; };
+      w.animate([
+        { transform:'translate(0,0) rotate(0deg)', opacity:1, offset:0 },
+        { transform:j(), opacity:1, offset:.07 },
+        { transform:j(), opacity:1, offset:.14 },
+        { transform:j(), opacity:1, offset:.22, easing:'cubic-bezier(.5,0,1,.55)' },
+        { transform:'translate('+dx+'px,'+dy+'px) rotate('+rot+'deg)', opacity:.9, offset:.9 },
+        { transform:'translate('+(dx*1.05)+'px,'+(dy*1.06)+'px) rotate('+(rot*1.06)+'deg)', opacity:0, offset:1 }
+      ], { duration:d, delay:delay, fill:'forwards' });
+      return delay + d;
+    }
+    function cycle(){
+      if(busy) return;
+      if(document.hidden || !vis || !d.classList.contains('hero-go')){ setTimeout(cycle, 2500); return; }
+      busy = true; h1.classList.add('crumbling');
+      var order = shuffle(masks.map(function(_,i){ return i; })), end = 0, kept = [];
+      order.forEach(function(li, k){
+        var m = masks[li], start = k*620 + r(0,380), shards = build(m);
+        shards.forEach(function(w){ w.style.visibility = 'hidden'; });
+        // cae mas de lo de arriba; el resto queda mellado
+        var idx = shuffle([0,1,2,3,0,1,4,5,2,3]).filter(function(v,i,a){ return a.indexOf(v) === i; }).slice(0, 3);
+        setTimeout(function(){
+          m.style.visibility = 'hidden';
+          shards.forEach(function(w){ w.style.visibility = 'visible'; });
+        }, start);
+        idx.forEach(function(si, n){ end = Math.max(end, fall(shards[si], start + 350 + n*330 + r(0,200))); });
+        shards.forEach(function(w, si){ if(idx.indexOf(si) < 0) kept.push(w); });
+      });
+      // Se vuelve a forjar: las letras suben desde abajo y rellenan las grietas
+      setTimeout(function(){
+        masks.forEach(function(m, i){
+          m.style.visibility = '';
+          m.firstElementChild.animate([{ transform:'translateY(112%)' },{ transform:'translateY(0)' }], { duration:380, delay:i*70, easing:'cubic-bezier(.9,0,.1,1)', fill:'backwards' });
+        });
+        setTimeout(function(){ layer.innerHTML = ''; h1.classList.remove('crumbling'); busy = false; setTimeout(cycle, 11000); }, 380 + masks.length*70 + 60);
+      }, end + 2300);
+    }
+    (function wait(){ if(d.classList.contains('hero-go')) setTimeout(cycle, 5200); else setTimeout(wait, 300); })();
+  })();
+
   // Entrada: la falla (solo primera visita de la sesion, ?intro=1 la fuerza)
   var intro = document.getElementById('intro'), timers = [], over = false;
   function heroGo(){ d.classList.add('hero-go'); }
@@ -597,9 +640,9 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
     timers.push(setTimeout(end, 760));
   }
   if(d.classList.contains('intro-on')){
-    timers.push(setTimeout(function(){ intro.classList.add('on'); }, 350));
-    timers.push(setTimeout(function(){ intro.classList.add('strike','split'); }, 1250));
-    timers.push(setTimeout(exit, 1950));
+    timers.push(setTimeout(function(){ intro.classList.add('on'); }, 150));
+    timers.push(setTimeout(function(){ intro.classList.add('strike','split'); }, 750));
+    timers.push(setTimeout(exit, 1350));
     ['click','keydown','touchstart','wheel'].forEach(function(ev){ window.addEventListener(ev, exit, { once: true, passive: true }); });
   } else { heroGo(); }
 })();
