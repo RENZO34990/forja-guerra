@@ -622,7 +622,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
           m.style.visibility = '';
           m.firstElementChild.animate([{ transform:'translateY(112%)' },{ transform:'translateY(0)' }], { duration:380, delay:i*70, easing:'cubic-bezier(.9,0,.1,1)', fill:'backwards' });
         });
-        setTimeout(function(){ layer.innerHTML = ''; h1.classList.remove('crumbling'); busy = false; setTimeout(cycle, 11000); }, 380 + masks.length*70 + 60);
+        setTimeout(function(){ layer.innerHTML = ''; h1.classList.remove('crumbling'); busy = false; setTimeout(cycle, 8250); }, 380 + masks.length*70 + 60);
       }, end + 2300);
     }
     (function wait(){ if(d.classList.contains('hero-go')) setTimeout(cycle, 5200); else setTimeout(wait, 300); })();
