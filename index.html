@@ -20,7 +20,13 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23131110'/%3E%3Crect x='6' y='20' width='32' height='7' fill='%23ECE6DA'/%3E%3Crect x='26' y='37' width='32' height='7' fill='%23ECE6DA'/%3E%3Crect x='31' y='10' width='2' height='44' fill='%23E0793C'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/files/newsreader-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
-<script>document.documentElement.classList.add('js');</script>
+<script>
+(function(){var d=document.documentElement;d.classList.add('js');
+var reduce=false,seen=false,force=/[?&]intro=1/.test(location.search);
+try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+try{seen=sessionStorage.getItem('forja_intro')==='1'}catch(e){}
+if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
+</script>
 <style>
   :root{
     --carbon:#131110; --hierro:#1A1715; --ceniza:#A39B8E; --escoria:#CFC8BC; --hueso:#ECE6DA; --brasa:#E0793C;
@@ -53,17 +59,46 @@
   .js .rv.in{opacity:1;transform:none}
 
   /* Hero */
-  .hero{position:relative;min-height:min(100dvh,900px);display:flex;flex-direction:column;justify-content:flex-end;padding:140px var(--gutter) clamp(40px,6vw,80px);overflow:hidden}
+  .hero{position:relative;min-height:min(100dvh,920px);display:flex;flex-direction:column;justify-content:flex-end;padding:140px var(--gutter) clamp(40px,6vw,80px);overflow:hidden}
   .strata{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
   .strata path.l{stroke:rgba(236,230,218,.07);stroke-width:1;fill:none}
-  .strata path.f{stroke:var(--brasa);stroke-opacity:.6;stroke-width:1.2;fill:none;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.8s var(--ease-ed) .5s}
-  .js .strata.in path.f,html:not(.js) .strata path.f{stroke-dashoffset:0}
-  .hero .eyebrow{margin-bottom:24px;color:var(--ceniza)}
-  .hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px 80px;align-items:end}
-  h1{font:500 clamp(72px,13vw,188px)/.88 var(--serif);letter-spacing:.02em;text-transform:uppercase}
-  .sub{margin-top:22px;font:600 clamp(16px,1.8vw,24px)/1.2 var(--cond);letter-spacing:.32em;text-transform:uppercase;color:var(--escoria)}
-  .lead{font-size:17px;color:var(--escoria);max-width:34em;text-wrap:pretty}
-  .slogan{margin-top:22px;font:600 28px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+  .strata path.f{stroke:var(--brasa);stroke-opacity:.7;stroke-width:1.4;fill:none;stroke-dasharray:700;stroke-dashoffset:700;transition:stroke-dashoffset .3s linear .3s}
+  .hero-go .strata path.f,html:not(.js) .strata path.f{stroke-dashoffset:0}
+  .hero .eyebrow{margin-bottom:20px;color:var(--ceniza)}
+  h1{font:500 clamp(96px,26vw,400px)/.8 var(--serif);letter-spacing:.015em;text-transform:uppercase;margin-left:-.04em}
+  .mask{display:inline-block;overflow:hidden;vertical-align:top;padding:.1em 0 .05em;margin-top:-.1em}
+  .js .mask>span{display:inline-block;transform:translateY(112%)}
+  .hero-go .mask>span{animation:slam .36s cubic-bezier(.9,0,.1,1) both;animation-delay:calc(var(--i)*55ms)}
+  @keyframes slam{from{transform:translateY(112%)}to{transform:none}}
+  .hero-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px clamp(32px,6vw,96px);align-items:start;margin-top:clamp(28px,4vw,56px);padding-top:clamp(20px,2.6vw,32px);border-top:1px solid var(--line-strong)}
+  .sub{font:600 clamp(16px,1.8vw,24px)/1.3 var(--cond);letter-spacing:.32em;text-transform:uppercase;color:var(--escoria)}
+  .lead{font-size:17px;color:var(--escoria);max-width:36em;text-wrap:pretty}
+  .js .rvh{opacity:0;transform:translateY(10px)}
+  .hero-go .rvh{animation:rise .5s cubic-bezier(.9,0,.1,1) both;animation-delay:calc(.35s + var(--d,0s))}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* Entrada: la falla */
+  .intro{display:none}
+  .intro-on .intro{display:block}
+  .intro-on body{overflow:hidden}
+  .intro .half{position:fixed;inset:0;z-index:300;background:var(--carbon);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s cubic-bezier(.9,0,.1,1)}
+  .intro .top{clip-path:inset(0 0 50% 0)}
+  .intro .bot{clip-path:inset(50% 0 0 0)}
+  .intro .word{font:500 clamp(72px,20vw,300px)/.9 var(--serif);letter-spacing:.03em;text-transform:uppercase;color:var(--hueso);padding-left:.03em;white-space:nowrap}
+  .intro .im{display:inline-block;overflow:hidden;vertical-align:top;padding:0 0 .06em}
+  .intro .im>span{display:inline-block;transform:translateY(112%)}
+  .intro.on .im>span{animation:slam .3s cubic-bezier(.9,0,.1,1) both;animation-delay:calc(var(--i)*85ms)}
+  .intro.split .top{transform:translateX(-1.8vw)}
+  .intro.split .bot{transform:translateX(1.8vw)}
+  .intro.exit .half{transition:transform .7s cubic-bezier(.77,0,.175,1)}
+  .intro.exit .top{transform:translateX(-104%)}
+  .intro.exit .bot{transform:translateX(104%)}
+  .intro .fault{position:fixed;left:50%;top:0;width:2px;height:100dvh;margin-left:-1px;background:var(--brasa);z-index:310;transform:scaleY(0);transform-origin:top;pointer-events:none}
+  .intro.strike .fault{transform:scaleY(1);transition:transform .16s linear}
+  .intro.exit .fault{opacity:0;transition:opacity .2s linear}
+  .intro .skip{position:fixed;left:0;right:0;bottom:28px;z-index:320;text-align:center;font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#7d766b;opacity:0;transition:opacity .4s linear}
+  .intro.on .skip{opacity:1}
+  .intro.exit .skip{opacity:0}
 
   /* Método */
   .wrap{max-width:1440px;margin:0 auto;padding:0 var(--gutter)}
@@ -110,6 +145,25 @@
   .nal span{transition:transform .3s var(--ease-ui)}
   @media (hover:hover){.nal:hover span{transform:translateX(5px)}}
 
+  /* Departamento */
+  .dept{padding-block:clamp(56px,8vw,112px)}
+  .dept-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px clamp(32px,6vw,96px);align-items:start}
+  .dept h2{font:400 clamp(34px,4.4vw,60px)/1.05 var(--serif);margin-top:16px;text-wrap:balance}
+  .dept .eyebrow{color:var(--brasa)}
+  .dept p.lead{margin-top:24px}
+  .team{list-style:none;border-top:1px solid var(--line-strong)}
+  .team li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px 24px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .team .who{font:500 24px/1.2 var(--serif)}
+  .team .role{font-size:15px;color:var(--escoria)}
+  .team .stat2{grid-column:1 / -1;font:400 12px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ceniza)}
+  .team-label{margin:36px 0 12px;font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ceniza)}
+  .team-label:first-child{margin-top:0}
+  .dept .links{margin-top:32px;display:flex;flex-wrap:wrap;gap:4px 36px}
+  .tl{display:inline-flex;gap:10px;padding:14px 0;font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--hueso);border-bottom:1px solid var(--line-strong);transition:color .3s var(--ease-ui),border-color .3s var(--ease-ui),transform .2s var(--ease-ui)}
+  .tl:active{transform:scale(.97)}
+  .tl span{transition:transform .3s var(--ease-ui)}
+  @media (hover:hover){.tl:hover{border-color:var(--brasa)}.tl:hover span{transform:translateX(5px)}}
+
   footer{border-top:1px solid var(--line);padding:32px 0 40px}
   footer .wrap{display:flex;flex-wrap:wrap;gap:16px 48px;justify-content:space-between;align-items:baseline;font:400 12px/1.7 var(--mono);letter-spacing:.1em;color:var(--ceniza)}
   footer .logo{font-size:20px;color:var(--hueso)}
@@ -120,6 +174,8 @@
     .card{grid-column:1 / -1;min-height:240px}
     .nav a.opt{display:none}
     .ameta{flex-basis:100%;order:5}
+    .hero-body,.dept-grid{grid-template-columns:1fr}
+    .team li{grid-template-columns:1fr}
     .topbar{height:64px}
   }
   @media (prefers-reduced-motion:reduce){
@@ -130,6 +186,12 @@
 </head>
 <body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="half top"><div class="word"><span class="im"><span style="--i:0">F</span></span><span class="im"><span style="--i:1">O</span></span><span class="im"><span style="--i:2">R</span></span><span class="im"><span style="--i:3">J</span></span><span class="im"><span style="--i:4">A</span></span></div></div>
+  <div class="half bot"><div class="word"><span class="im"><span style="--i:0">F</span></span><span class="im"><span style="--i:1">O</span></span><span class="im"><span style="--i:2">R</span></span><span class="im"><span style="--i:3">J</span></span><span class="im"><span style="--i:4">A</span></span></div></div>
+  <span class="fault"></span>
+  <span class="skip">Pulsa para entrar</span>
+</div>
 <div id="sentinel" aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:80px;pointer-events:none"></div>
 
 <header class="topbar" id="topbar">
@@ -140,6 +202,7 @@
   <nav class="nav" aria-label="Principal">
     <a href="#actos">Los actos</a>
     <a class="opt" href="#metodo">Cómo se lee</a>
+    <a href="#departamento">Departamento</a>
     <a class="opt" href="https://renzo34990.github.io/gengis-biblioteca/" target="_blank" rel="noopener">Nalanda</a>
   </nav>
 </header>
@@ -147,19 +210,14 @@
 <main id="contenido">
   <section class="hero" id="inicio" aria-labelledby="titulo">
     <svg class="strata" aria-hidden="true" id="strata" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
-      <path class="l" d="M0 440H1330V452H1440"/><path class="l" d="M0 500H1330V512H1440"/><path class="l" d="M0 560H1330V572H1440"/><path class="l" d="M0 620H1330V632H1440"/><path class="l" d="M0 680H1330V692H1440"/><path class="l" d="M0 740H1330V752H1440"/><path class="l" d="M0 800H1330V812H1440"/><path class="l" d="M0 860H1330V872H1440"/>
-      <path class="f" d="M1330 300V900"/>
+      <path class="l" d="M0 440H1400V452H1440"/><path class="l" d="M0 500H1400V512H1440"/><path class="l" d="M0 560H1400V572H1440"/><path class="l" d="M0 620H1400V632H1440"/><path class="l" d="M0 680H1400V692H1440"/><path class="l" d="M0 740H1400V752H1440"/><path class="l" d="M0 800H1400V812H1440"/><path class="l" d="M0 860H1400V872H1440"/>
+      <path class="f" d="M1400 300V900"/>
     </svg>
-    <p class="eyebrow mono rv">Volumen II / Club Kongzhi UNMSM</p>
-    <div class="hero-grid">
-      <div>
-        <h1 id="titulo" class="rv" style="--d:.1s">Forja</h1>
-        <p class="sub rv" style="--d:.25s">Las guerras que formaron Asia</p>
-      </div>
-      <div class="rv" style="--d:.4s">
-        <p class="lead">Estudiamos los conflictos para comprender el poder, reconocer el sacrificio y entender cómo las civilizaciones construyen, o destruyen, su futuro. Cada guerra se lee como una decisión con precio, y como una herencia que recibe la generación siguiente.</p>
-        <p class="slogan">Luchar. Aprender. Avanzar.</p>
-      </div>
+    <p class="eyebrow mono rvh">Volumen II / Club Kongzhi UNMSM</p>
+    <h1 id="titulo" aria-label="Forja"><span class="mask" aria-hidden="true"><span style="--i:0">F</span></span><span class="mask" aria-hidden="true"><span style="--i:1">O</span></span><span class="mask" aria-hidden="true"><span style="--i:2">R</span></span><span class="mask" aria-hidden="true"><span style="--i:3">J</span></span><span class="mask" aria-hidden="true"><span style="--i:4">A</span></span></h1>
+    <div class="hero-body">
+      <p class="sub rvh" style="--d:.1s">Las guerras que formaron Asia</p>
+      <p class="lead rvh" style="--d:.2s">Estudiamos los conflictos para comprender el poder, reconocer el sacrificio y entender cómo las civilizaciones construyen, o destruyen, su futuro. Cada guerra se lee como una decisión con precio, y como una herencia que recibe la generación siguiente.</p>
     </div>
   </section>
 
@@ -356,6 +414,29 @@
       </div>
     </details>
   </section>
+  <section class="wrap dept" id="departamento" aria-labelledby="dept-title">
+    <div class="dept-grid">
+      <div>
+        <p class="eyebrow mono rv">Club Kongzhi UNMSM</p>
+        <h2 id="dept-title" class="rv" style="--d:.06s">Departamento de Investigación</h2>
+        <p class="lead rv" style="--d:.1s">Quienes investigan, verifican y escriben las fichas de Forja y los cuadernos de Nalanda. Si quieres corregirnos, proponer una guerra, colaborar o invitarnos a conversar, escríbenos.</p>
+        <div class="links rv" style="--d:.14s">
+          <a class="tl" href="https://renzo34990.github.io/gengis-biblioteca/#departamento-de-investigacion" target="_blank" rel="noopener">Conocer al equipo en Nalanda <span aria-hidden="true">→</span></a>
+          <a class="tl" href="https://www.instagram.com/clubkongzhi/" target="_blank" rel="noopener">Instagram del club <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="rv" style="--d:.1s">
+        <p class="team-label">Equipo del Departamento</p>
+        <ul class="team">
+          <li><span class="who">Renzo</span><span class="role">Director de Investigación</span><span class="stat2">LinkedIn / por añadir</span></li>
+        </ul>
+        <p class="team-label">Investigadores de Forja</p>
+        <ul class="team">
+          <li><span class="who">Próximamente</span><span class="role">Un investigador por guerra, con su nombre en la ficha</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -368,28 +449,47 @@
 
 <script>
 (function(){
+  var d = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var bar = document.getElementById('topbar'), sentinel = document.getElementById('sentinel');
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(e){ bar.classList.toggle('solid', !e[0].isIntersecting); }).observe(sentinel);
   } else { bar.classList.add('solid'); }
 
-  var targets = document.querySelectorAll('.rv, .strata');
+  // Revelados de scroll (el hero tiene su propia secuencia)
+  var io = null;
+  var targets = document.querySelectorAll('.rv, .card');
+  document.querySelectorAll('.card').forEach(function(c){ c.classList.add('rv'); });
   if(reduce || !('IntersectionObserver' in window)){
     targets.forEach(function(t){ t.classList.add('in'); });
   } else {
-    var io = new IntersectionObserver(function(es){
+    io = new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
     targets.forEach(function(t){ io.observe(t); });
   }
-  // las fichas se revelan al abrir cada acto
-  document.querySelectorAll('.card').forEach(function(c){ c.classList.add('rv'); if(!reduce && 'IntersectionObserver' in window){ io.observe(c); } else { c.classList.add('in'); } });
-  document.querySelectorAll('details.acto').forEach(function(d){
-    d.addEventListener('toggle', function(){ if(d.open){ d.querySelectorAll('.card').forEach(function(c,i){ c.classList.remove('in'); c.style.setProperty('--d', (i*0.08)+'s'); void c.offsetWidth; c.classList.add('in'); }); } });
+  document.querySelectorAll('details.acto').forEach(function(dt){
+    dt.addEventListener('toggle', function(){ if(dt.open){ dt.querySelectorAll('.card').forEach(function(c,i){ c.classList.remove('in'); c.style.setProperty('--d', (i*0.08)+'s'); void c.offsetWidth; c.classList.add('in'); }); } });
   });
-  // enlaces internos
   if(location.hash){ var t = document.querySelector(location.hash); if(t && t.tagName === 'DETAILS') t.open = true; }
+
+  // Entrada: la falla (solo primera visita de la sesion, ?intro=1 la fuerza)
+  var intro = document.getElementById('intro'), timers = [], over = false;
+  function heroGo(){ d.classList.add('hero-go'); }
+  function end(){ if(over) return; over = true; d.classList.remove('intro-on'); try{ sessionStorage.setItem('forja_intro','1'); }catch(e){} }
+  function exit(){
+    if(intro.classList.contains('exit')) return;
+    timers.forEach(clearTimeout);
+    intro.classList.add('on','strike','split','exit');
+    timers.push(setTimeout(heroGo, 120));
+    timers.push(setTimeout(end, 760));
+  }
+  if(d.classList.contains('intro-on')){
+    timers.push(setTimeout(function(){ intro.classList.add('on'); }, 350));
+    timers.push(setTimeout(function(){ intro.classList.add('strike','split'); }, 1250));
+    timers.push(setTimeout(exit, 1950));
+    ['click','keydown','touchstart','wheel'].forEach(function(ev){ window.addEventListener(ev, exit, { once: true, passive: true }); });
+  } else { heroGo(); }
 })();
 </script>
 </body>
