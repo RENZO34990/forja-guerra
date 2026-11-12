@@ -194,6 +194,20 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   @media (hover:hover){.nal:hover span{transform:translateX(5px)}}
 
   /* Departamento */
+  .coleccion{padding-block:clamp(40px,6vw,80px) 0}
+  .coleccion .eyebrow{color:var(--ceniza);margin-bottom:22px}
+  .col-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line)}
+  .vc{display:flex;flex-direction:column;gap:6px;padding:28px 26px;border-right:1px solid var(--line);transition:background-color .3s var(--ease-ui)}
+  .vc:last-child{border-right:0}
+  .vc .vol{font-size:12px;letter-spacing:.16em;color:var(--ceniza)}
+  .vc h3{font:500 24px/1.2 var(--serif);color:var(--hueso);letter-spacing:.02em}
+  .vc p{font-size:14px;line-height:1.65;color:var(--ceniza);max-width:34ch}
+  .vc .go{margin-top:auto;padding-top:14px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brasa)}
+  .vc .go.off{color:var(--ceniza)}
+  .vc.here{background:rgba(224,121,60,.07)}
+  a.vc:active{transform:scale(.99)}
+  @media (hover:hover){a.vc:hover{background:rgba(236,230,218,.05)}}
+  @media (max-width:760px){.col-grid{grid-template-columns:1fr}.vc{border-right:0;border-bottom:1px solid var(--line)}.vc:last-child{border-bottom:0}}
   .dept{padding-block:clamp(56px,8vw,112px)}
   .dept-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px clamp(32px,6vw,96px);align-items:start}
   .dept h2{font:400 clamp(34px,4.4vw,60px)/1.05 var(--serif);margin-top:16px;text-wrap:balance}
@@ -491,6 +505,27 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
       </div>
     </details>
   </section>
+  <section class="wrap coleccion" id="coleccion" aria-labelledby="col-title">
+    <p class="eyebrow mono rv" id="col-title">La colección editorial</p>
+    <div class="col-grid">
+      <a class="vc rv" href="https://renzo34990.github.io/gengis-biblioteca/">
+        <span class="vol mono">VOL. I</span><h3>Nalanda</h3>
+        <p>Historia, política y economía de China, Japón y Corea del Sur, contadas como relato de poder y legado.</p>
+        <span class="go mono">Ir a Nalanda →</span>
+      </a>
+      <div class="vc here rv" style="--d:.06s" aria-current="page">
+        <span class="vol mono">VOL. II</span><h3>Forja</h3>
+        <p>Las guerras que formaron Asia: los conflictos que redibujaron fronteras, dinastías e identidades nacionales en la región.</p>
+        <span class="go mono">Estás aquí</span>
+      </div>
+      <div class="vc rv" style="--d:.12s">
+        <span class="vol mono">VOL. III</span><h3>Alma</h3>
+        <p>El alma de Asia: filosofía, religión y tradición cultural detrás de las civilizaciones que estudiamos.</p>
+        <span class="go mono off">En desarrollo</span>
+      </div>
+    </div>
+  </section>
+
   <section class="wrap dept" id="club" aria-labelledby="dept-title">
     <div class="dept-grid">
       <div>
