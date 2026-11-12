@@ -212,8 +212,18 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .tl span{transition:transform .3s var(--ease-ui)}
   @media (hover:hover){.tl:hover{border-color:var(--brasa)}.tl:hover span{transform:translateX(5px)}}
 
-  footer{border-top:1px solid var(--line);padding:32px 0 40px}
+  footer{border-top:1px solid var(--line);padding:54px 0 60px;text-align:center}
   footer .wrap{display:flex;flex-wrap:wrap;gap:16px 48px;justify-content:space-between;align-items:baseline;font:400 12px/1.7 var(--mono);letter-spacing:.1em;color:var(--ceniza)}
+  .publisher-seal{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:2px;color:var(--ceniza);transition:background-color .3s var(--ease-ui),transform .25s var(--ease-ui)}
+  .publisher-seal svg{width:26px;height:26px;flex-shrink:0}
+  .publisher-seal .ps-text{text-align:left;font:400 12px/1.5 var(--mono);letter-spacing:.08em}
+  .publisher-seal strong{display:block;color:var(--hueso);font-weight:500;font-size:13px}
+  .publisher-seal:active{transform:scale(.97)}
+  @media (hover:hover){.publisher-seal:hover{background:rgba(236,230,218,.06)}}
+  .thread{position:fixed;left:clamp(10px,2.2vw,32px);top:14vh;bottom:14vh;width:1px;background:rgba(236,230,218,.16);z-index:95;pointer-events:none}
+  .thread i{display:block;width:100%;height:100%;background:var(--brasa);transform-origin:top;transform:scaleY(0)}
+  .thread::after{content:"";position:absolute;left:-2px;width:5px;height:5px;border-radius:50%;background:var(--brasa);top:calc(var(--p,0) * 100%);transform:translateY(-50%)}
+  @media (max-width:860px){.thread{display:none}}
   footer .logo{font-size:20px;color:var(--hueso)}
   footer a{transition:color .25s var(--ease-ui)}
   @media (hover:hover){footer a:hover{color:var(--hueso)}}
@@ -497,12 +507,12 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
 </main>
 
 <footer>
-  <div class="wrap">
-    <span class="logo">Forja</span>
-    <a href="https://renzo34990.github.io/pr-landing/">Parte de Triveni, con Nalanda y Alma</a>
-    <a href="#inicio">Volver al inicio</a>
-  </div>
+  <a class="publisher-seal" href="https://www.instagram.com/clubkongzhi/" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14.5" stroke="#E0793C" stroke-width="1"/><path d="M16 8L16 24M8 16L24 16" stroke="#E0793C" stroke-width="1"/><circle cx="16" cy="16" r="3" stroke="#E0793C" stroke-width="1"/></svg>
+    <span class="ps-text"><strong>Club Kongzhi</strong>Editor de Forja / UNMSM</span>
+  </a>
 </footer>
+<div class="thread" id="thread" aria-hidden="true"><i></i></div>
 
 <script>
 (function(){
@@ -557,6 +567,14 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
       new IntersectionObserver(function(e){ on = e[0].isIntersecting; if(on && !raf) raf = requestAnimationFrame(tick); }).observe(cv.parentNode);
     }
     raf = requestAnimationFrame(tick);
+  })();
+
+  // Hilo de lectura
+  (function(){
+    var th = document.getElementById('thread'); if(!th) return; var fill = th.firstElementChild, tk = false;
+    function upd(){ tk = false; var h = document.documentElement.scrollHeight - window.innerHeight, p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0; fill.style.transform = 'scaleY(' + p + ')'; th.style.setProperty('--p', p); }
+    window.addEventListener('scroll', function(){ if(!tk){ tk = true; requestAnimationFrame(upd); } }, { passive: true });
+    window.addEventListener('resize', upd); upd();
   })();
 
   // Derrumbe: el titulo se desmorona de a pocos, como un muro viejo, y se vuelve a forjar
@@ -624,7 +642,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         setTimeout(function(){ layer.innerHTML = ''; h1.classList.remove('crumbling'); busy = false; setTimeout(cycle, 8250); }, 380 + masks.length*70 + 60);
       }, end + 2300);
     }
-    (function wait(){ if(d.classList.contains('hero-go')) setTimeout(cycle, 5200); else setTimeout(wait, 300); })();
+    (function wait(){ if(d.classList.contains('hero-go')) setTimeout(cycle, 900); else setTimeout(wait, 300); })();
   })();
 
   // Entrada: la falla (solo primera visita de la sesion, ?intro=1 la fuerza)
