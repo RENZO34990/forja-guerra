@@ -51,7 +51,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .topbar.solid{background:rgba(19,17,16,.92);border-bottom-color:var(--line)}
   .logo{display:flex;align-items:center;gap:12px;font:500 20px/1 var(--serif);letter-spacing:.06em;text-transform:uppercase}
   .nav{display:flex;gap:clamp(16px,2.6vw,32px)}
-  .nav a{font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--escoria);padding:14px 0;transition:color .25s var(--ease-ui)}
+  .nav a{white-space:nowrap;font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--escoria);padding:14px 0;transition:color .25s var(--ease-ui)}
   @media (hover:hover){.nav a:hover{color:var(--hueso)}}
 
   /* Revelados */
@@ -178,6 +178,11 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
     .team li{grid-template-columns:1fr}
     .topbar{height:64px}
   }
+  @media (max-width:520px){
+    .nav a.opt2{display:none}
+    .logo span{display:none}
+    .nav{gap:20px}
+  }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -200,7 +205,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
     <span>Forja</span>
   </a>
   <nav class="nav" aria-label="Principal">
-    <a href="#actos">Los actos</a>
+    <a class="back" href="https://renzo34990.github.io/pr-landing/">&larr; Triveni</a>
+    <a class="opt2" href="#actos">Los actos</a>
     <a class="opt" href="#metodo">Cómo se lee</a>
     <a href="#departamento">Departamento</a>
     <a class="opt" href="https://renzo34990.github.io/gengis-biblioteca/" target="_blank" rel="noopener">Nalanda</a>
@@ -442,7 +448,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
 <footer>
   <div class="wrap">
     <span class="logo">Forja</span>
-    <span>Parte de Triveni, con Nalanda y Alma</span>
+    <a href="https://renzo34990.github.io/pr-landing/">Parte de Triveni, con Nalanda y Alma</a>
     <a href="#inicio">Volver al inicio</a>
   </div>
 </footer>
