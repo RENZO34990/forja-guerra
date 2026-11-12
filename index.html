@@ -49,6 +49,12 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   /* Cabecera */
   .topbar{position:fixed;inset:0 0 auto 0;height:72px;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 var(--gutter);border-bottom:1px solid transparent;background:rgba(19,17,16,0);transition:background-color .45s var(--ease-ed),border-color .45s var(--ease-ed)}
   .topbar.solid{background:rgba(19,17,16,.92);border-bottom-color:var(--line)}
+  .tb-word{font:italic 500 19px/1 var(--serif);letter-spacing:.01em;color:var(--hueso);padding:14px 0}
+  .tb-right{display:flex;align-items:center;gap:clamp(18px,2.6vw,32px);font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+  .tb-back{color:var(--ceniza);padding:14px 0;white-space:nowrap;transition:color .25s var(--ease-ui)}
+  .tb-back:active{transform:scale(.97)}
+  @media (hover:hover){.tb-back:hover{color:var(--hueso)}}
+  .tb-vol{color:var(--ceniza)}
   .logo{display:flex;align-items:center;gap:12px;font:500 20px/1 var(--serif);letter-spacing:.06em;text-transform:uppercase}
   .nav{display:flex;gap:clamp(16px,2.6vw,32px)}
   .nav a{white-space:nowrap;font:400 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--escoria);padding:14px 0;transition:color .25s var(--ease-ui)}
@@ -242,17 +248,11 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
 <div id="sentinel" aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:80px;pointer-events:none"></div>
 
 <header class="topbar" id="topbar">
-  <a class="logo" href="#inicio" aria-label="Forja, ir al inicio">
-    <svg aria-hidden="true" width="26" height="26" viewBox="0 0 64 64" fill="none"><rect x="6" y="20" width="32" height="7" fill="#ECE6DA"/><rect x="26" y="37" width="32" height="7" fill="#ECE6DA"/><rect x="31" y="10" width="2" height="44" fill="#E0793C"/></svg>
-    <span>Forja</span>
-  </a>
-  <nav class="nav" aria-label="Principal">
-    <a class="back" href="https://renzo34990.github.io/pr-landing/">&larr; Triveni</a>
-    <a class="opt2" href="#actos">Los actos</a>
-    <a class="opt" href="#metodo">Cómo se lee</a>
-    <a href="#departamento">Departamento</a>
-    <a class="opt" href="https://renzo34990.github.io/gengis-biblioteca/" target="_blank" rel="noopener">Nalanda</a>
-  </nav>
+  <a class="tb-word" href="#inicio" aria-label="Forja, ir al inicio">Forja</a>
+  <div class="tb-right">
+    <a class="tb-back" href="https://renzo34990.github.io/pr-landing/">&larr; Triveni</a>
+    <span class="tb-vol">Vol. II</span>
+  </div>
 </header>
 
 <main id="contenido">
@@ -271,7 +271,6 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
       <path class="l" d="M0 440H1400V452H1440"/><path class="l" d="M0 500H1400V512H1440"/><path class="l" d="M0 560H1400V572H1440"/><path class="l" d="M0 620H1400V632H1440"/><path class="l" d="M0 680H1400V692H1440"/><path class="l" d="M0 740H1400V752H1440"/><path class="l" d="M0 800H1400V812H1440"/><path class="l" d="M0 860H1400V872H1440"/>
       <path class="f" d="M1400 300V900"/>
     </svg>
-    <p class="eyebrow mono rvh">Volumen II / Club Kongzhi UNMSM</p>
     <h1 id="titulo" aria-label="Forja" data-t="FORJA"><span class="mask" aria-hidden="true"><span style="--i:0">F</span></span><span class="mask" aria-hidden="true"><span style="--i:1">O</span></span><span class="mask" aria-hidden="true"><span style="--i:2">R</span></span><span class="mask" aria-hidden="true"><span style="--i:3">J</span></span><span class="mask" aria-hidden="true"><span style="--i:4">A</span></span></h1>
     <div class="hero-body">
       <p class="sub rvh" style="--d:.1s">Las guerras que formaron Asia</p>
