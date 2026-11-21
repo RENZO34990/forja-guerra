@@ -194,24 +194,73 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   @media (hover:hover){.nal:hover span{transform:translateX(5px)}}
 
 
-  /* Fortaleza que se rompe */
-  .actos-layout{display:block}
-  .fort{display:none}
-  .mini{display:none}
-  @media (min-width:1100px){
-    .actos-layout{display:grid;grid-template-columns:clamp(220px,21vw,310px) minmax(0,1fr);gap:clamp(24px,3.4vw,56px);align-items:start}
-    .fort{display:block;position:sticky;top:104px;padding-top:26px}
-    .fort::before{content:"";position:absolute;inset:0 -30% -6% -30%;z-index:-1;pointer-events:none;background:radial-gradient(60% 46% at 50% 88%,rgba(224,121,60,calc(var(--dmg,0) * .24)),transparent 72%)}
-    .fort-svg{display:block;width:100%;height:auto;overflow:visible}
-    .fort-cap{display:flex;flex-direction:column;gap:6px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line-strong);color:var(--escoria);letter-spacing:.14em}
-    .fort-cap #fort-n{color:var(--brasa)}
+  /* Destruccion visible en cada acto: del pulcro a las cenizas */
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .acto{position:relative}
+  .acto[data-s="1"]{--ink:#F6F1E6;--sh:0}
+  .acto[data-s="2"]{--ink:var(--hueso);--sh:0}
+  .acto[data-s="3"]{--ink:var(--escoria);--sh:.5}
+  .acto[data-s="4"]{--ink:#B4AC9E;--sh:.9}
+  .acto[data-s="5"]{--ink:#A29B8D;--sh:1.3}
+  .atitle{position:relative;color:var(--ink)}
+  .acto:not([data-s="1"]) .atitle{flex:0 1 auto}
+  .acto:not([data-s="1"]) .ameta{margin-left:auto}
+  .atitle .wd{display:inline-block;white-space:nowrap}
+  .ch{display:inline-block;position:relative;color:var(--ink);transform-origin:50% 85%;
+    transform:translate(calc(var(--dx) * var(--dmg) * 1px),calc(var(--dy) * var(--dmg) * 1px)) rotate(calc(var(--r) * var(--dmg) * 1deg));
+    opacity:calc(1 - clamp(0,(var(--dmg) - var(--g)) * 3,.36));transition:transform 1.2s var(--ease-ed),opacity 1.2s var(--ease-ed)}
+  /* I: pulcritud, un brillo de pulido recorre el titulo */
+  .acto[data-s="1"] .ch{background:linear-gradient(112deg,var(--ink) 44%,#fff 50%,var(--ink) 56%) 100% 0/320% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:polish 7s ease-in-out calc(var(--i) * .06s) infinite}
+  @keyframes polish{0%,20%{background-position:100% 0}60%,100%{background-position:0 0}}
+  .acto[data-s="1"] .bar{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset}
+  /* II a V: la grieta cruza el titulo */
+  .acto[data-s="2"] .atitle::after,.acto[data-s="3"] .atitle::after,.acto[data-s="4"] .atitle::after{content:"";position:absolute;left:-1%;right:-1%;top:-4%;bottom:-4%;pointer-events:none;background:center/100% 100% no-repeat}
+  .acto[data-s="2"] .atitle::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 24L24 14L40 26L66 12L90 25L116 10L142 26L172 14L200 22' fill='none' stroke='%23E0793C' stroke-width='1.2' vector-effect='non-scaling-stroke' stroke-linecap='round'/%3E%3C/svg%3E");opacity:.85}
+  .acto[data-s="3"] .atitle::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20L20 10L34 28L60 8L84 30L110 6L138 30L168 10L200 24M60 8L52 0M110 6L118 0M84 30L90 40M138 30L130 40' fill='none' stroke='%23E0793C' stroke-width='1.5' vector-effect='non-scaling-stroke' stroke-linecap='round'/%3E%3C/svg%3E");opacity:.95}
+  .acto[data-s="4"] .atitle::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 18L16 6L30 30L52 4L74 34L98 2L124 36L150 6L176 32L200 12M30 30L22 40M74 34L82 40M124 36L116 40M52 4L60 0M98 2L90 0M150 6L158 0M176 32L184 40' fill='none' stroke='%23E0793C' stroke-width='1.8' vector-effect='non-scaling-stroke' stroke-linecap='round'/%3E%3C/svg%3E");opacity:.8}
+  .acto[open][data-s="2"] .atitle::after,.acto[open][data-s="3"] .atitle::after,.acto[open][data-s="4"] .atitle::after{animation:crackrun 1.1s var(--ease-ed) both}
+  @keyframes crackrun{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+  /* III a V: las letras se parten en dos pedazos que se separan */
+  .acto[data-s="3"] .ch,.acto[data-s="4"] .ch,.acto[data-s="5"] .ch{color:transparent}
+  .acto[data-s="3"] .ch::before,.acto[data-s="3"] .ch::after,.acto[data-s="4"] .ch::before,.acto[data-s="4"] .ch::after,.acto[data-s="5"] .ch::before,.acto[data-s="5"] .ch::after{content:attr(data-c);position:absolute;left:0;top:0;color:var(--ink);transition:transform 1.2s var(--ease-ed)}
+  .ch::before{clip-path:polygon(-30% -60%,var(--a) -60%,var(--b) 160%,-30% 160%);transform:translate(calc(var(--dx) * var(--sh) * -.3px),calc(var(--dy) * var(--sh) * -.14px)) rotate(calc(var(--r) * var(--sh) * -.25deg))}
+  .ch::after{clip-path:polygon(var(--a) -60%,130% -60%,130% 160%,var(--b) 160%);transform:translate(calc(var(--dx) * var(--sh) * .3px),calc(var(--dy) * var(--sh) * .45px)) rotate(calc(var(--r) * var(--sh) * .3deg))}
+  @media (hover:hover){.acto summary:hover .ch{--ink:#fff}.acto[data-s="5"] summary:hover .ch{--ink:#B5AE9F}}
+  .num{color:var(--ink)}
+  .acto[data-s="5"] .num{opacity:.6}
+  /* la barra de color tambien se rompe */
+  .acto[data-s="2"] .bar{background:linear-gradient(90deg,var(--tc) 0 46%,transparent 46% 48.5%,var(--tc) 48.5% 100%)}
+  .acto[data-s="3"] .bar{background:linear-gradient(90deg,var(--tc) 0 38%,transparent 38% 42%,var(--tc) 42% 100%);clip-path:polygon(0 0,38% 0,36% 100%,0 100%)}
+  .acto[data-s="3"] .bar::after{content:"";position:absolute}
+  .acto[data-s="4"] .bar{background:linear-gradient(90deg,var(--tc) 0 14%,transparent 14% 20%,var(--tc) 20% 42%,transparent 42% 57%,var(--tc) 57% 66%,transparent 66% 82%,var(--tc) 82% 91%,transparent 91%);transform:skewX(-14deg);height:5px}
+  .acto[data-s="5"] .bar{height:6px;background:radial-gradient(circle,var(--tc) 0 1.3px,transparent 1.8px) 0 50%/11px 6px repeat-x;opacity:.55}
+  .ash{position:absolute;left:0;top:0;pointer-events:none;z-index:6}
+  /* cada acto se despliega segun su estado */
+  .acto[data-s="3"] .card{filter:saturate(.85)}
+  .acto[data-s="4"] .card{filter:saturate(.68)}
+  .acto[data-s="5"] .card{filter:saturate(.38) brightness(.92)}
+  .js .acto .card.rv{transform:none;transition:none}
+  .js .acto .card.rv.in{animation-delay:var(--d,0s);animation-fill-mode:both}
+  .js .acto[data-s="1"] .card.rv.in{animation-name:wipe;animation-duration:.95s;animation-timing-function:var(--ease-ed)}
+  @keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+  .js .acto[data-s="2"] .card.rv.in{animation-name:slip;animation-duration:.85s;animation-timing-function:var(--ease-ed)}
+  @keyframes slip{0%{opacity:0;transform:translateY(-12px) rotate(-.9deg)}50%{opacity:1;transform:translate(3px,1px) rotate(.5deg)}72%{transform:translate(-2px,0) rotate(-.25deg)}100%{opacity:1;transform:none}}
+  .js .acto[data-s="3"] .card.rv.in{animation-name:drop;animation-duration:.95s}
+  @keyframes drop{0%{opacity:0;transform:translateY(-84px) rotate(-2.4deg);animation-timing-function:cubic-bezier(.6,0,.9,.5)}58%{opacity:1;transform:translateY(7px) rotate(.5deg);animation-timing-function:cubic-bezier(.2,.7,.3,1)}78%{transform:translateY(-3px)}100%{opacity:1;transform:none}}
+  .acto[open][data-s="3"] .grid{animation:quake .5s .45s both}
+  .acto[open][data-s="4"] .grid{animation:quake2 .7s .3s both}
+  .acto[open][data-s="5"] .grid{animation:quake2 .9s .2s both}
+  @keyframes quake{0%,100%{transform:none}20%{transform:translate(-2px,2px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,1px)}80%{transform:translate(1px,0)}}
+  @keyframes quake2{0%,100%{transform:none}15%{transform:translate(-4px,3px)}30%{transform:translate(4px,-2px)}45%{transform:translate(-3px,2px)}60%{transform:translate(2px,-1px)}80%{transform:translate(-1px,1px)}}
+  .js .acto[data-s="4"] .card.rv.in{animation-name:crumble;animation-duration:1.15s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+  @keyframes crumble{0%{opacity:1;filter:saturate(.68) blur(6px) brightness(1.7);clip-path:polygon(40% 45%,45% 40%,50% 44%,55% 40%,60% 45%,58% 50%,60% 55%,55% 60%,50% 56%,45% 60%,40% 55%,42% 50%)}45%{filter:saturate(.68) blur(2px) brightness(1.25);clip-path:polygon(8% 6%,22% 0,48% 9%,70% 2%,96% 6%,100% 30%,92% 62%,98% 94%,64% 100%,36% 90%,4% 98%,0 52%)}100%{opacity:1;filter:saturate(.68);clip-path:polygon(0 0,25% 0,50% 0,75% 0,100% 0,100% 33%,100% 66%,100% 100%,66% 100%,33% 100%,0 100%,0 50%)}}
+  .js .acto[data-s="5"] .card.rv.in{animation-name:ashin;animation-duration:2s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+  @keyframes ashin{0%{opacity:0;filter:grayscale(1) blur(16px) brightness(.45) saturate(.38);transform:translateY(26px)}100%{opacity:1;filter:saturate(.38) brightness(.92);transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .js .acto .card.rv.in,.acto[open] .grid,.acto[open] .atitle::after{animation:none!important}
+    .acto[data-s="1"] .ch{animation:none;background:none;-webkit-text-fill-color:currentColor}
+    .ch,.ch::before,.ch::after{transition:none}
   }
-  @media (max-width:1099px){.mini{display:block;width:52px;height:auto;flex:none;align-self:center;overflow:visible}.mini .f-b{stroke-width:2.6;stroke:rgba(236,230,218,.85)}.mini .f-c{stroke-width:3.2}.mini .f-ground{stroke-width:2.4}.mini .f-flag{stroke-width:3}}
-  .f-b{fill:var(--hierro);stroke:rgba(236,230,218,.55);stroke-width:.8}
-  .f-w{fill:rgba(224,121,60,.6);stroke:rgba(224,121,60,.95)}
-  .f-c{fill:none;stroke:var(--brasa);stroke-width:1.1;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-  .f-ground{fill:none;stroke:rgba(236,230,218,.3);stroke-width:1}
-  .f-flag{stroke:var(--brasa);stroke-width:1.2;fill:rgba(224,121,60,.5);stroke-linejoin:round}
 
   /* Departamento */
   .coleccion{padding-block:clamp(40px,6vw,80px) 0}
@@ -348,15 +397,10 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   </section>
 
   <section class="wrap actos" id="actos" aria-label="Las quince guerras en cinco actos">
-    <div class="actos-layout">
-      <aside class="fort" aria-hidden="true">
-        <svg id="fort" class="fort-svg" focusable="false"></svg>
-        <p class="fort-cap mono"><span id="fort-n">Acto I</span><span id="fort-cap">Casi nueva</span></p>
-      </aside>
-      <div class="actos-list">
+    <h2 class="sr">Las quince guerras en cinco actos</h2>
     
-    <details class="acto" open style="--tc:#D9C58A">
-      <summary><svg class="mini" aria-hidden="true" focusable="false"></svg><span class="bar" aria-hidden="true"></span><span class="num">I</span><span class="atitle">El orden imperial se quiebra</span><span class="ameta">1839 - 1905 / 3 fichas</span><span class="plus" aria-hidden="true">+</span></summary>
+    <details class="acto" data-s="1" open style="--tc:#D9C58A;--dmg:0">
+      <summary><span class="bar" aria-hidden="true"></span><span class="num">I</span><span class="atitle"><span class="sr">El orden imperial se quiebra</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:-3.5;--dy:1.6;--r:4.9;--g:0.90;--a:64%;--b:52%" data-c="E">E</span><span class="ch" style="--i:1;--dx:-0.7;--dy:4.4;--r:0.6;--g:0.37;--a:47%;--b:46%" data-c="l">l</span></span> <span class="wd"><span class="ch" style="--i:2;--dx:-4.5;--dy:5.5;--r:8.0;--g:0.59;--a:37%;--b:79%" data-c="o">o</span><span class="ch" style="--i:3;--dx:4.9;--dy:5.7;--r:-6.5;--g:1.06;--a:41%;--b:70%" data-c="r">r</span><span class="ch" style="--i:4;--dx:-0.9;--dy:4.7;--r:-1.7;--g:0.69;--a:35%;--b:80%" data-c="d">d</span><span class="ch" style="--i:5;--dx:3.2;--dy:-0.7;--r:2.7;--g:0.41;--a:18%;--b:68%" data-c="e">e</span><span class="ch" style="--i:6;--dx:-1.0;--dy:4.2;--r:1.2;--g:0.46;--a:19%;--b:72%" data-c="n">n</span></span> <span class="wd"><span class="ch" style="--i:7;--dx:-2.6;--dy:1.6;--r:2.5;--g:1.07;--a:26%;--b:69%" data-c="i">i</span><span class="ch" style="--i:8;--dx:0.5;--dy:5.7;--r:2.0;--g:0.91;--a:67%;--b:62%" data-c="m">m</span><span class="ch" style="--i:9;--dx:2.1;--dy:3.5;--r:-2.9;--g:0.88;--a:52%;--b:53%" data-c="p">p</span><span class="ch" style="--i:10;--dx:5.0;--dy:1.2;--r:-7.9;--g:0.39;--a:37%;--b:71%" data-c="e">e</span><span class="ch" style="--i:11;--dx:-0.7;--dy:-0.1;--r:5.8;--g:0.90;--a:45%;--b:79%" data-c="r">r</span><span class="ch" style="--i:12;--dx:3.9;--dy:4.4;--r:7.2;--g:0.52;--a:21%;--b:73%" data-c="i">i</span><span class="ch" style="--i:13;--dx:0.9;--dy:0.6;--r:-8.0;--g:0.53;--a:62%;--b:37%" data-c="a">a</span><span class="ch" style="--i:14;--dx:2.2;--dy:4.3;--r:7.0;--g:1.05;--a:51%;--b:69%" data-c="l">l</span></span> <span class="wd"><span class="ch" style="--i:15;--dx:-2.8;--dy:4.4;--r:4.1;--g:0.60;--a:47%;--b:30%" data-c="s">s</span><span class="ch" style="--i:16;--dx:1.9;--dy:1.8;--r:5.8;--g:0.40;--a:56%;--b:43%" data-c="e">e</span></span> <span class="wd"><span class="ch" style="--i:17;--dx:-4.6;--dy:3.8;--r:-7.1;--g:0.88;--a:27%;--b:69%" data-c="q">q</span><span class="ch" style="--i:18;--dx:4.8;--dy:3.1;--r:7.8;--g:0.33;--a:46%;--b:40%" data-c="u">u</span><span class="ch" style="--i:19;--dx:-4.5;--dy:1.8;--r:4.6;--g:1.15;--a:33%;--b:40%" data-c="i">i</span><span class="ch" style="--i:20;--dx:-4.1;--dy:-0.9;--r:2.5;--g:0.40;--a:22%;--b:74%" data-c="e">e</span><span class="ch" style="--i:21;--dx:4.5;--dy:1.2;--r:0.7;--g:0.70;--a:39%;--b:74%" data-c="b">b</span><span class="ch" style="--i:22;--dx:-0.5;--dy:-0.4;--r:1.4;--g:0.51;--a:27%;--b:82%" data-c="r">r</span><span class="ch" style="--i:23;--dx:-2.9;--dy:1.3;--r:7.7;--g:0.81;--a:43%;--b:46%" data-c="a">a</span></span></span></span><span class="ameta">1839 - 1905 / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card live" style="--span:7;--accent:#C9A63E">
           <svg class="glyph" aria-hidden="true" viewBox="0 0 2000 1000" preserveAspectRatio="xMaxYMax meet"><path d="M232.0 245.0Q228.0 254.0 218.0 260.0Q210.0 266.0 193.0 264.0Q191.0 277.0 188.0 293.0Q182.0 321.0 175.0 352.0Q168.0 383.0 161.0 412.0Q158.0 424.0 155.0 435.0H286.0V164.0H51.0L43.0 135.0H362.0L406.0 76.0L420.0 87.0Q434.0 99.0 453.5 115.5Q473.0 132.0 487.0 148.0Q484.0 164.0 462.0 164.0H363.0V435.0H370.0L413.0 377.0L426.0 388.0Q439.0 400.0 457.5 416.5Q476.0 433.0 490.0 448.0Q486.0 464.0 464.0 464.0H363.0V851.0Q363.0 879.0 356.0 901.5Q349.0 924.0 325.5 939.5Q302.0 955.0 254.0 960.0Q253.0 941.0 248.5 926.5Q244.0 912.0 235.0 903.0Q225.0 894.0 206.5 887.0Q188.0 880.0 156.0 875.0V861.0L170.0 862.0Q184.0 863.0 203.5 864.0Q223.0 865.0 240.5 866.0Q258.0 867.0 265.0 867.0Q278.0 867.0 282.0 862.5Q286.0 858.0 286.0 847.0V556.0Q256.0 622.0 216.0 682.0Q144.0 789.0 44.0 870.0L31.0 857.0Q81.0 800.0 122.5 731.0Q164.0 662.0 195.0 586.0Q220.0 525.0 238.0 464.0H156.0L124.0 499.0L48.0 441.0Q59.0 434.0 76.0 427.0Q82.0 424.0 88.0 422.0Q91.0 411.0 94.0 399.0Q101.0 368.0 108.5 333.5Q116.0 299.0 122.0 267.5Q128.0 236.0 130.0 214.0ZM503.0 109.0 590.0 148.0H611.0Q614.0 128.0 619.0 100.0Q624.0 62.0 627.0 35.0L748.0 58.0Q742.0 80.0 709.0 81.0Q696.0 99.0 676.0 121.0Q662.0 136.0 652.0 148.0H802.0L843.0 106.0L923.0 171.0Q913.0 182.0 885.0 187.0Q882.0 276.0 876.0 335.0Q870.0 394.0 858.5 428.0Q847.0 462.0 829.0 477.0Q811.0 491.0 788.0 498.0Q765.0 505.0 737.0 505.0Q737.0 489.0 734.5 475.5Q732.0 462.0 724.0 454.0Q715.0 446.0 697.5 439.5Q680.0 433.0 659.0 430.0L660.0 414.0Q673.0 415.0 691.0 416.5Q709.0 418.0 725.5 418.5Q742.0 419.0 750.0 419.0Q761.0 419.0 767.5 417.5Q774.0 416.0 779.0 412.0Q792.0 398.0 801.0 334.0Q808.0 278.0 811.0 177.0H576.0V550.0H848.0L890.0 506.0L971.0 574.0Q967.0 580.0 957.0 583.5Q947.0 587.0 931.0 589.0Q926.0 689.0 916.0 758.5Q906.0 828.0 890.0 870.5Q874.0 913.0 853.0 931.0Q833.0 948.0 806.0 955.5Q779.0 963.0 748.0 963.0Q748.0 947.0 744.5 934.0Q741.0 921.0 731.0 912.0Q722.0 904.0 700.0 897.5Q678.0 891.0 653.0 887.0V870.0Q671.0 871.0 694.0 873.0Q717.0 875.0 737.5 876.5Q758.0 878.0 767.0 878.0Q790.0 878.0 802.0 868.0Q821.0 851.0 836.0 770.0Q849.0 698.0 856.0 579.0H583.0L556.0 620.0L475.0 567.0Q483.0 558.0 497.0 549.0Q500.0 547.0 503.0 545.0ZM726.0 646.0 735.0 653.0Q744.0 661.0 758.5 672.5Q773.0 684.0 788.5 697.5Q804.0 711.0 817.0 723.0Q813.0 739.0 790.0 739.0H420.0L412.0 710.0H676.0ZM614.0 219.0Q664.0 234.0 692.5 254.0Q721.0 274.0 733.0 294.5Q745.0 315.0 744.0 332.5Q743.0 350.0 733.5 361.0Q724.0 372.0 709.0 372.5Q694.0 373.0 677.0 360.0Q674.0 337.0 662.0 312.0Q650.0 287.0 634.5 264.5Q619.0 242.0 603.0 226.0Z M1210.0 70.0 1325.0 82.0Q1324.0 92.0 1316.5 99.5Q1309.0 107.0 1290.0 109.0V312.0H1543.0V38.0L1660.0 48.0Q1659.0 58.0 1652.0 65.0Q1645.0 72.0 1626.0 75.0V312.0H1808.0L1862.0 242.0L1872.0 250.0Q1882.0 258.0 1897.0 271.0Q1912.0 284.0 1929.0 298.0Q1946.0 312.0 1959.0 325.0Q1958.0 333.0 1950.5 337.0Q1943.0 341.0 1932.0 341.0H1290.0V425.0Q1289.0 476.0 1285.0 526.0H1597.0L1639.0 478.0L1734.0 550.0Q1729.0 557.0 1717.5 562.5Q1706.0 568.0 1690.0 572.0V941.0Q1689.0 944.0 1677.0 949.0Q1665.0 954.0 1649.0 957.5Q1633.0 961.0 1620.0 961.0H1607.0V555.0H1281.0Q1280.0 567.0 1279.0 578.0Q1268.0 655.0 1242.0 725.0Q1216.0 795.0 1168.5 855.0Q1121.0 915.0 1045.0 961.0L1034.0 949.0Q1107.0 881.0 1145.0 797.0Q1183.0 713.0 1196.5 618.5Q1210.0 524.0 1210.0 425.0Z" fill="#C9A63E"/></svg>
@@ -390,8 +434,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-    <details class="acto" style="--tc:#B98B52">
-      <summary><svg class="mini" aria-hidden="true" focusable="false"></svg><span class="bar" aria-hidden="true"></span><span class="num">II</span><span class="atitle">Imperio y ocupación</span><span class="ameta">1931 - 1945 / 3 fichas</span><span class="plus" aria-hidden="true">+</span></summary>
+    <details class="acto" data-s="2" style="--tc:#B98B52;--dmg:0.28">
+      <summary><span class="bar" aria-hidden="true"></span><span class="num">II</span><span class="atitle"><span class="sr">Imperio y ocupación</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:0.8;--dy:-0.4;--r:8.4;--g:1.09;--a:47%;--b:33%" data-c="I">I</span><span class="ch" style="--i:1;--dx:1.6;--dy:-0.3;--r:-5.0;--g:0.55;--a:62%;--b:80%" data-c="m">m</span><span class="ch" style="--i:2;--dx:-2.9;--dy:5.8;--r:-7.7;--g:0.46;--a:23%;--b:58%" data-c="p">p</span><span class="ch" style="--i:3;--dx:2.7;--dy:0.9;--r:-0.5;--g:0.58;--a:58%;--b:80%" data-c="e">e</span><span class="ch" style="--i:4;--dx:-1.0;--dy:-0.3;--r:-1.3;--g:0.56;--a:25%;--b:71%" data-c="r">r</span><span class="ch" style="--i:5;--dx:3.2;--dy:3.4;--r:3.0;--g:1.05;--a:43%;--b:80%" data-c="i">i</span><span class="ch" style="--i:6;--dx:-1.2;--dy:1.4;--r:-1.7;--g:0.87;--a:18%;--b:59%" data-c="o">o</span></span> <span class="wd"><span class="ch" style="--i:7;--dx:-2.8;--dy:-1.2;--r:5.3;--g:0.62;--a:41%;--b:30%" data-c="y">y</span></span> <span class="wd"><span class="ch" style="--i:8;--dx:-2.4;--dy:4.6;--r:8.7;--g:0.67;--a:35%;--b:34%" data-c="o">o</span><span class="ch" style="--i:9;--dx:2.6;--dy:1.2;--r:8.8;--g:1.00;--a:59%;--b:66%" data-c="c">c</span><span class="ch" style="--i:10;--dx:-0.2;--dy:2.0;--r:6.8;--g:0.56;--a:29%;--b:74%" data-c="u">u</span><span class="ch" style="--i:11;--dx:0.3;--dy:5.0;--r:8.2;--g:0.36;--a:54%;--b:52%" data-c="p">p</span><span class="ch" style="--i:12;--dx:0.3;--dy:3.6;--r:-1.0;--g:0.99;--a:61%;--b:75%" data-c="a">a</span><span class="ch" style="--i:13;--dx:1.1;--dy:2.8;--r:-0.7;--g:0.84;--a:61%;--b:41%" data-c="c">c</span><span class="ch" style="--i:14;--dx:4.2;--dy:-0.4;--r:7.8;--g:0.77;--a:26%;--b:35%" data-c="i">i</span><span class="ch" style="--i:15;--dx:4.6;--dy:5.1;--r:-2.9;--g:0.36;--a:53%;--b:65%" data-c="ó">ó</span><span class="ch" style="--i:16;--dx:1.9;--dy:0.8;--r:-8.0;--g:0.54;--a:70%;--b:50%" data-c="n">n</span></span></span></span><span class="ameta">1931 - 1945 / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card" style="--span:5;--accent:#D26A55">
           <svg class="glyph" aria-hidden="true" viewBox="0 0 2000 1000" preserveAspectRatio="xMaxYMax meet"><path d="M294.0 184.0H458.0V44.0L571.0 55.0Q570.0 65.0 561.5 72.5Q553.0 80.0 534.0 82.0V184.0H682.0V44.0L796.0 55.0Q795.0 65.0 786.5 72.5Q778.0 80.0 759.0 82.0V184.0H818.0L866.0 121.0L882.0 133.0Q897.0 146.0 917.0 163.0Q937.0 180.0 954.0 196.0Q950.0 212.0 927.0 212.0H759.0V344.0H826.0L875.0 280.0L884.0 287.0Q893.0 295.0 907.5 306.5Q922.0 318.0 937.5 331.5Q953.0 345.0 966.0 357.0Q962.0 373.0 939.0 373.0H648.0V473.0H838.0L875.0 429.0L965.0 496.0Q960.0 502.0 948.5 508.0Q937.0 514.0 921.0 517.0V862.0Q921.0 889.0 914.0 909.5Q907.0 930.0 884.0 943.0Q861.0 956.0 813.0 961.0Q810.0 944.0 805.5 930.0Q801.0 916.0 791.0 907.0Q780.0 898.0 761.5 891.5Q743.0 885.0 710.0 881.0V865.0L726.0 866.0Q741.0 867.0 761.5 868.5Q782.0 870.0 801.0 871.0Q820.0 872.0 827.0 872.0Q840.0 872.0 844.5 867.5Q849.0 863.0 849.0 852.0V502.0H643.0V746.0H722.0V560.0L803.0 569.0Q802.0 576.0 797.0 581.0Q792.0 586.0 780.0 588.0V804.0Q780.0 809.0 764.5 817.0Q749.0 825.0 733.0 825.0H722.0V774.0H497.0V821.0Q497.0 826.0 482.5 833.5Q468.0 841.0 453.0 841.0H442.0V560.0L520.0 569.0Q519.0 575.0 514.0 580.5Q509.0 586.0 497.0 588.0V746.0H576.0V502.0H379.0V935.0Q379.0 938.0 370.0 944.5Q361.0 951.0 347.5 955.5Q334.0 960.0 319.0 960.0H307.0V438.0L385.0 473.0H571.0V373.0H294.0L286.0 344.0H458.0V212.0H302.0ZM92.0 673.0Q101.0 673.0 105.5 670.0Q110.0 667.0 117.0 652.0Q123.0 642.0 127.5 632.0Q132.0 622.0 141.5 601.0Q151.0 580.0 168.5 538.0Q186.0 496.0 216.5 423.5Q247.0 351.0 295.0 237.0L313.0 241.0Q302.0 276.0 287.5 321.0Q273.0 366.0 258.5 413.0Q244.0 460.0 230.0 503.5Q216.0 547.0 206.5 579.0Q197.0 611.0 193.0 626.0Q187.0 648.0 183.5 671.0Q180.0 694.0 180.0 712.0Q181.0 730.0 186.0 748.0Q191.0 766.0 197.0 786.5Q203.0 807.0 207.0 832.0Q211.0 857.0 209.0 889.0Q208.0 923.0 191.5 942.5Q175.0 962.0 147.0 962.0Q133.0 962.0 122.5 949.0Q112.0 936.0 109.0 912.0Q117.0 860.0 118.0 816.5Q119.0 773.0 114.0 744.5Q109.0 716.0 98.0 709.0Q88.0 701.0 76.0 698.0Q64.0 695.0 48.0 694.0V673.0ZM534.0 344.0H682.0V212.0H534.0ZM91.0 47.0Q149.0 55.0 184.5 71.5Q220.0 88.0 237.0 108.0Q254.0 128.0 257.0 147.5Q260.0 167.0 251.0 180.5Q242.0 194.0 225.5 197.5Q209.0 201.0 189.0 190.0Q181.0 166.0 163.0 141.0Q145.0 116.0 123.5 93.0Q102.0 70.0 82.0 55.0ZM39.0 289.0Q94.0 297.0 127.5 313.0Q161.0 329.0 176.0 348.0Q191.0 367.0 192.5 385.5Q194.0 404.0 184.5 417.0Q175.0 430.0 159.0 432.5Q143.0 435.0 124.0 423.0Q115.0 389.0 87.5 354.0Q60.0 319.0 31.0 298.0Z M1841.0 60.0 1949.0 71.0Q1947.0 81.0 1940.0 88.0Q1933.0 95.0 1915.0 98.0V920.0Q1915.0 925.0 1906.0 932.0Q1897.0 939.0 1883.5 944.0Q1870.0 949.0 1856.0 949.0H1841.0ZM1397.0 59.0 1506.0 70.0Q1505.0 80.0 1497.5 87.5Q1490.0 95.0 1471.0 98.0V484.0Q1471.0 585.0 1448.5 674.0Q1426.0 763.0 1370.5 835.0Q1315.0 907.0 1214.0 960.0L1203.0 948.0Q1280.0 891.0 1322.0 820.5Q1364.0 750.0 1380.5 665.5Q1397.0 581.0 1397.0 484.0ZM1617.0 77.0 1721.0 89.0Q1719.0 98.0 1712.0 105.0Q1705.0 112.0 1688.0 114.0V881.0Q1688.0 886.0 1679.5 892.5Q1671.0 899.0 1657.5 904.0Q1644.0 909.0 1631.0 909.0H1617.0ZM1087.0 674.0Q1096.0 674.0 1100.0 671.5Q1104.0 669.0 1111.0 653.0Q1116.0 643.0 1120.5 632.5Q1125.0 622.0 1134.0 600.5Q1143.0 579.0 1160.0 536.0Q1177.0 493.0 1206.5 418.0Q1236.0 343.0 1283.0 226.0L1301.0 230.0Q1290.0 266.0 1276.0 312.0Q1262.0 358.0 1248.0 407.0Q1234.0 456.0 1220.5 500.5Q1207.0 545.0 1198.0 578.0Q1189.0 611.0 1185.0 625.0Q1180.0 649.0 1176.0 672.0Q1172.0 695.0 1172.0 713.0Q1173.0 737.0 1180.5 761.0Q1188.0 785.0 1195.0 815.5Q1202.0 846.0 1200.0 888.0Q1199.0 921.0 1183.0 940.5Q1167.0 960.0 1140.0 960.0Q1125.0 960.0 1115.5 947.5Q1106.0 935.0 1103.0 910.0Q1111.0 859.0 1112.0 816.0Q1113.0 773.0 1108.0 745.0Q1103.0 717.0 1092.0 710.0Q1082.0 702.0 1070.5 699.0Q1059.0 696.0 1043.0 695.0V674.0ZM1711.0 342.0Q1759.0 373.0 1785.5 405.0Q1812.0 437.0 1822.5 466.5Q1833.0 496.0 1830.5 520.0Q1828.0 544.0 1817.0 558.0Q1806.0 572.0 1790.0 572.5Q1774.0 573.0 1758.0 556.0Q1761.0 521.0 1753.0 483.5Q1745.0 446.0 1730.5 410.5Q1716.0 375.0 1699.0 348.0ZM1324.0 348.0H1340.0Q1355.0 414.0 1354.0 459.5Q1353.0 505.0 1341.5 533.5Q1330.0 562.0 1313.5 575.0Q1297.0 588.0 1280.0 589.0Q1263.0 590.0 1251.5 581.5Q1240.0 573.0 1238.5 557.0Q1237.0 541.0 1252.0 522.0Q1282.0 502.0 1301.5 459.5Q1321.0 417.0 1324.0 348.0ZM1503.0 346.0Q1553.0 383.0 1576.5 420.5Q1600.0 458.0 1603.0 490.0Q1606.0 522.0 1595.5 543.0Q1585.0 564.0 1567.0 568.0Q1549.0 572.0 1532.0 553.0Q1537.0 519.0 1532.0 482.5Q1527.0 446.0 1515.5 412.0Q1504.0 378.0 1489.0 352.0ZM1104.0 49.0Q1161.0 58.0 1195.5 75.0Q1230.0 92.0 1246.5 112.0Q1263.0 132.0 1264.5 151.0Q1266.0 170.0 1257.0 183.0Q1248.0 196.0 1232.0 199.0Q1216.0 202.0 1196.0 190.0Q1188.0 167.0 1171.5 142.5Q1155.0 118.0 1135.0 95.5Q1115.0 73.0 1096.0 57.0ZM1044.0 267.0Q1098.0 273.0 1130.0 289.0Q1162.0 305.0 1177.0 324.0Q1192.0 343.0 1193.0 361.0Q1194.0 379.0 1184.5 391.5Q1175.0 404.0 1158.5 406.5Q1142.0 409.0 1123.0 397.0Q1115.0 364.0 1089.0 330.0Q1063.0 296.0 1035.0 275.0Z" fill="#D26A55"/></svg>
@@ -425,8 +469,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-    <details class="acto" style="--tc:#8E6FA0">
-      <summary><svg class="mini" aria-hidden="true" focusable="false"></svg><span class="bar" aria-hidden="true"></span><span class="num">III</span><span class="atitle">El mapa se divide</span><span class="ameta">1945 - 1958 / 3 fichas</span><span class="plus" aria-hidden="true">+</span></summary>
+    <details class="acto" data-s="3" style="--tc:#8E6FA0;--dmg:0.55">
+      <summary><span class="bar" aria-hidden="true"></span><span class="num">III</span><span class="atitle"><span class="sr">El mapa se divide</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:-3.5;--dy:2.9;--r:-5.9;--g:0.91;--a:56%;--b:41%" data-c="E">E</span><span class="ch" style="--i:1;--dx:-1.2;--dy:2.9;--r:1.2;--g:0.34;--a:51%;--b:64%" data-c="l">l</span></span> <span class="wd"><span class="ch" style="--i:2;--dx:1.2;--dy:2.2;--r:6.8;--g:0.93;--a:42%;--b:58%" data-c="m">m</span><span class="ch" style="--i:3;--dx:-2.7;--dy:-1.0;--r:5.6;--g:0.89;--a:56%;--b:66%" data-c="a">a</span><span class="ch" style="--i:4;--dx:-0.6;--dy:2.0;--r:-5.0;--g:0.75;--a:27%;--b:61%" data-c="p">p</span><span class="ch" style="--i:5;--dx:1.2;--dy:3.0;--r:3.1;--g:0.51;--a:23%;--b:51%" data-c="a">a</span></span> <span class="wd"><span class="ch" style="--i:6;--dx:-1.2;--dy:-0.4;--r:-1.3;--g:0.81;--a:43%;--b:38%" data-c="s">s</span><span class="ch" style="--i:7;--dx:4.1;--dy:-0.7;--r:-5.3;--g:0.80;--a:58%;--b:48%" data-c="e">e</span></span> <span class="wd"><span class="ch" style="--i:8;--dx:-0.7;--dy:2.5;--r:-1.1;--g:0.87;--a:35%;--b:82%" data-c="d">d</span><span class="ch" style="--i:9;--dx:-1.8;--dy:3.9;--r:2.5;--g:0.76;--a:58%;--b:62%" data-c="i">i</span><span class="ch" style="--i:10;--dx:1.8;--dy:1.1;--r:4.4;--g:0.81;--a:52%;--b:69%" data-c="v">v</span><span class="ch" style="--i:11;--dx:-3.4;--dy:4.7;--r:-2.3;--g:0.34;--a:25%;--b:60%" data-c="i">i</span><span class="ch" style="--i:12;--dx:4.4;--dy:-0.6;--r:-7.7;--g:1.03;--a:42%;--b:76%" data-c="d">d</span><span class="ch" style="--i:13;--dx:-2.5;--dy:3.5;--r:7.9;--g:0.48;--a:46%;--b:42%" data-c="e">e</span></span></span></span><span class="ameta">1945 - 1958 / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card wide" style="--span:12;--accent:#C9A63E">
           <svg class="glyph" aria-hidden="true" viewBox="0 0 2000 1000" preserveAspectRatio="xMaxYMax meet"><path d="M94.0 62.0 181.0 102.0H814.0L857.0 53.0L948.0 125.0Q943.0 131.0 931.5 136.5Q920.0 142.0 905.0 145.0V927.0Q905.0 930.0 894.0 937.5Q883.0 945.0 867.0 950.5Q851.0 956.0 836.0 956.0H824.0V887.0H174.0V930.0Q174.0 935.0 165.0 942.5Q156.0 950.0 141.0 955.5Q126.0 961.0 108.0 961.0H94.0ZM824.0 858.0V131.0H174.0V858.0ZM234.0 252.0H643.0L690.0 193.0L705.0 205.0Q719.0 217.0 739.5 233.5Q760.0 250.0 775.0 266.0Q771.0 282.0 749.0 282.0H530.0V463.0H623.0L668.0 406.0L682.0 417.0Q695.0 429.0 714.0 445.0Q733.0 461.0 748.0 476.0Q745.0 492.0 723.0 492.0H530.0V715.0H667.0L713.0 656.0L728.0 667.0Q742.0 679.0 762.0 696.0Q782.0 713.0 798.0 728.0Q794.0 744.0 771.0 744.0H224.0L216.0 715.0H455.0V492.0H281.0L273.0 463.0H455.0V282.0H242.0ZM591.0 516.0Q638.0 530.0 665.0 549.0Q692.0 568.0 703.5 587.5Q715.0 607.0 714.5 624.0Q714.0 641.0 705.0 651.5Q696.0 662.0 682.0 662.5Q668.0 663.0 652.0 651.0Q649.0 630.0 637.5 606.5Q626.0 583.0 611.0 561.0Q596.0 539.0 580.0 523.0Z M1040.0 591.0H1295.0V314.0H1080.0L1072.0 285.0H1295.0V47.0L1412.0 58.0Q1410.0 69.0 1402.0 76.5Q1394.0 84.0 1376.0 87.0V285.0H1618.0V47.0L1736.0 58.0Q1734.0 69.0 1726.0 76.5Q1718.0 84.0 1700.0 87.0V285.0H1789.0L1839.0 218.0L1849.0 225.0Q1859.0 233.0 1873.5 245.0Q1888.0 257.0 1904.0 271.0Q1920.0 285.0 1933.0 298.0Q1929.0 314.0 1907.0 314.0H1700.0V591.0H1808.0L1862.0 521.0L1873.0 529.0Q1883.0 537.0 1899.0 549.5Q1915.0 562.0 1932.0 576.5Q1949.0 591.0 1964.0 604.0Q1960.0 620.0 1936.0 620.0H1048.0ZM1376.0 591.0H1618.0V314.0H1376.0ZM1598.0 686.0Q1693.0 712.0 1756.0 745.5Q1819.0 779.0 1854.5 813.0Q1890.0 847.0 1903.0 877.0Q1916.0 907.0 1911.0 928.0Q1906.0 949.0 1888.0 955.5Q1870.0 962.0 1844.0 949.0Q1827.0 917.0 1798.0 882.5Q1769.0 848.0 1733.0 814.0Q1697.0 780.0 1660.0 749.5Q1623.0 719.0 1589.0 696.0ZM1341.0 666.0 1446.0 726.0Q1441.0 733.0 1433.0 735.5Q1425.0 738.0 1408.0 735.0Q1371.0 775.0 1317.0 817.5Q1263.0 860.0 1198.0 897.5Q1133.0 935.0 1062.0 962.0L1053.0 949.0Q1112.0 912.0 1167.5 863.5Q1223.0 815.0 1268.5 763.5Q1314.0 712.0 1341.0 666.0Z" fill="#C9A63E"/></svg>
@@ -460,8 +504,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-    <details class="acto" style="--tc:#6F94BF">
-      <summary><svg class="mini" aria-hidden="true" focusable="false"></svg><span class="bar" aria-hidden="true"></span><span class="num">IV</span><span class="atitle">Fronteras de la Guerra Fría</span><span class="ameta">1955 - 1979 / 3 fichas</span><span class="plus" aria-hidden="true">+</span></summary>
+    <details class="acto" data-s="4" style="--tc:#6F94BF;--dmg:0.78">
+      <summary><span class="bar" aria-hidden="true"></span><span class="num">IV</span><span class="atitle"><span class="sr">Fronteras de la Guerra Fría</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:4.8;--dy:1.7;--r:3.9;--g:0.92;--a:31%;--b:74%" data-c="F">F</span><span class="ch" style="--i:1;--dx:-4.2;--dy:2.8;--r:-6.8;--g:0.62;--a:39%;--b:73%" data-c="r">r</span><span class="ch" style="--i:2;--dx:-3.8;--dy:-1.3;--r:-5.0;--g:1.00;--a:19%;--b:32%" data-c="o">o</span><span class="ch" style="--i:3;--dx:-2.7;--dy:-1.1;--r:-6.7;--g:0.74;--a:29%;--b:77%" data-c="n">n</span><span class="ch" style="--i:4;--dx:-0.9;--dy:3.9;--r:4.0;--g:0.65;--a:68%;--b:72%" data-c="t">t</span><span class="ch" style="--i:5;--dx:0.7;--dy:4.6;--r:-4.5;--g:0.61;--a:55%;--b:43%" data-c="e">e</span><span class="ch" style="--i:6;--dx:4.5;--dy:2.9;--r:-0.5;--g:0.51;--a:36%;--b:43%" data-c="r">r</span><span class="ch" style="--i:7;--dx:2.6;--dy:2.2;--r:5.5;--g:0.69;--a:30%;--b:75%" data-c="a">a</span><span class="ch" style="--i:8;--dx:0.2;--dy:-1.7;--r:6.0;--g:0.41;--a:50%;--b:46%" data-c="s">s</span></span> <span class="wd"><span class="ch" style="--i:9;--dx:4.2;--dy:1.8;--r:-2.7;--g:1.01;--a:60%;--b:74%" data-c="d">d</span><span class="ch" style="--i:10;--dx:3.2;--dy:0.4;--r:3.0;--g:0.41;--a:54%;--b:79%" data-c="e">e</span></span> <span class="wd"><span class="ch" style="--i:11;--dx:2.7;--dy:3.7;--r:-3.7;--g:0.77;--a:56%;--b:69%" data-c="l">l</span><span class="ch" style="--i:12;--dx:-1.1;--dy:4.6;--r:-1.0;--g:0.94;--a:22%;--b:41%" data-c="a">a</span></span> <span class="wd"><span class="ch" style="--i:13;--dx:-0.6;--dy:-1.6;--r:2.6;--g:1.04;--a:52%;--b:45%" data-c="G">G</span><span class="ch" style="--i:14;--dx:0.7;--dy:3.0;--r:-4.9;--g:0.63;--a:55%;--b:35%" data-c="u">u</span><span class="ch" style="--i:15;--dx:1.5;--dy:1.0;--r:-0.4;--g:0.58;--a:53%;--b:39%" data-c="e">e</span><span class="ch" style="--i:16;--dx:1.8;--dy:0.6;--r:3.3;--g:1.02;--a:52%;--b:36%" data-c="r">r</span><span class="ch" style="--i:17;--dx:4.8;--dy:0.5;--r:7.6;--g:0.45;--a:41%;--b:63%" data-c="r">r</span><span class="ch" style="--i:18;--dx:3.2;--dy:-1.7;--r:2.1;--g:1.04;--a:60%;--b:73%" data-c="a">a</span></span> <span class="wd"><span class="ch" style="--i:19;--dx:-0.1;--dy:-0.9;--r:2.7;--g:0.94;--a:19%;--b:69%" data-c="F">F</span><span class="ch" style="--i:20;--dx:3.8;--dy:3.0;--r:-6.1;--g:0.66;--a:36%;--b:79%" data-c="r">r</span><span class="ch" style="--i:21;--dx:3.7;--dy:0.3;--r:4.0;--g:0.93;--a:38%;--b:56%" data-c="í">í</span><span class="ch" style="--i:22;--dx:-2.5;--dy:2.2;--r:-1.8;--g:0.80;--a:39%;--b:81%" data-c="a">a</span></span></span></span><span class="ameta">1955 - 1979 / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card" style="--span:4;--accent:#A39B8E">
           <svg class="glyph" aria-hidden="true" viewBox="0 0 2000 1000" preserveAspectRatio="xMaxYMax meet"><path d="M481.0 173.0 568.0 220.0H659.0Q659.0 217.0 659.0 214.0Q653.0 125.0 651.0 40.0L762.0 52.0Q761.0 62.0 753.5 69.5Q746.0 77.0 729.0 79.0Q729.0 145.0 733.0 219.0Q733.0 220.0 733.0 220.0H829.0L855.0 187.0Q855.0 187.0 855.0 187.0Q839.0 191.0 821.0 177.0Q817.0 151.0 798.0 121.5Q779.0 92.0 759.0 74.0L769.0 66.0Q821.0 78.0 846.5 96.5Q872.0 115.0 879.0 134.0Q885.0 151.0 880.0 164.0L891.0 172.0Q905.0 184.0 925.0 200.5Q945.0 217.0 961.0 233.0Q958.0 249.0 935.0 249.0H735.0Q739.0 308.0 746.0 366.0Q755.0 439.0 772.0 504.0Q773.0 512.0 775.0 519.0Q822.0 423.0 845.0 306.0L949.0 336.0Q946.0 345.0 936.5 351.0Q927.0 357.0 910.0 356.0Q873.0 490.0 801.0 594.0Q807.0 607.0 814.0 620.0Q839.0 670.0 875.0 696.0Q885.0 704.0 890.0 703.5Q895.0 703.0 899.0 694.0Q908.0 679.0 918.5 650.0Q929.0 621.0 937.0 597.0L949.0 600.0L931.0 733.0Q947.0 755.0 953.5 773.0Q960.0 791.0 950.0 801.0Q938.0 813.0 919.5 811.5Q901.0 810.0 880.5 799.5Q860.0 789.0 841.0 775.0Q795.0 741.0 763.0 683.0Q756.0 672.0 750.0 659.0Q660.0 761.0 532.0 817.0L520.0 804.0Q642.0 734.0 727.0 606.0Q727.0 606.0 727.0 605.0Q717.0 579.0 709.0 550.0Q688.0 475.0 677.0 389.0Q667.0 320.0 662.0 249.0H552.0V633.0Q571.0 623.0 592.0 612.0Q635.0 590.0 680.0 566.0L687.0 579.0Q668.0 595.0 638.0 622.0Q608.0 649.0 571.0 681.0Q537.0 710.0 500.0 741.0Q494.0 753.0 487.0 758.0L435.0 689.0Q465.0 670.0 473.0 661.0Q481.0 652.0 481.0 639.0ZM343.0 429.0Q341.0 439.0 334.0 445.0Q327.0 451.0 311.0 453.0V571.0H347.0L390.0 513.0L404.0 524.0Q417.0 536.0 435.5 552.5Q454.0 569.0 469.0 585.0Q465.0 601.0 443.0 601.0H311.0V832.0Q355.0 848.0 410.0 854.0Q478.0 862.0 567.0 862.0H655.0Q708.0 862.0 767.0 861.5Q826.0 861.0 880.0 860.5Q934.0 860.0 970.0 859.0V873.0Q946.0 877.0 933.5 895.0Q921.0 913.0 919.0 937.0H564.0Q470.0 937.0 399.5 925.0Q329.0 913.0 277.0 880.5Q225.0 848.0 188.0 789.0Q166.0 756.0 148.0 711.0Q136.0 768.0 117.0 822.0Q90.0 899.0 43.0 958.0L30.0 948.0Q52.0 901.0 66.5 841.0Q81.0 781.0 90.0 715.5Q99.0 650.0 102.5 585.0Q106.0 520.0 105.0 461.0L214.0 483.0Q212.0 493.0 203.0 499.5Q194.0 506.0 177.0 506.0Q171.0 580.0 158.0 662.0Q156.0 669.0 155.0 675.0Q176.0 721.0 202.0 752.0Q219.0 774.0 240.0 791.0V417.0ZM396.0 306.0 411.0 317.0Q425.0 329.0 444.5 346.0Q464.0 363.0 480.0 378.0Q476.0 394.0 453.0 394.0H54.0L46.0 365.0H222.0V217.0H83.0L75.0 187.0H222.0V39.0L330.0 50.0Q329.0 60.0 321.5 66.5Q314.0 73.0 296.0 76.0V187.0H333.0L377.0 131.0L391.0 142.0Q405.0 154.0 424.0 169.5Q443.0 185.0 458.0 201.0Q455.0 217.0 432.0 217.0H296.0V365.0H351.0Z M1438.0 195.0 1447.0 203.0Q1455.0 211.0 1468.5 222.5Q1482.0 234.0 1496.5 248.0Q1511.0 262.0 1522.0 275.0Q1518.0 291.0 1496.0 291.0H1311.0V494.0H1371.0L1411.0 451.0L1497.0 517.0Q1493.0 522.0 1482.5 527.0Q1472.0 532.0 1458.0 535.0V858.0Q1458.0 862.0 1447.0 868.0Q1436.0 874.0 1421.5 879.0Q1407.0 884.0 1393.0 884.0H1381.0V829.0H1167.0V899.0Q1167.0 904.0 1150.0 914.5Q1133.0 925.0 1103.0 925.0H1090.0V457.0L1180.0 494.0H1233.0V39.0L1348.0 51.0Q1346.0 61.0 1338.0 68.0Q1330.0 75.0 1311.0 78.0V261.0H1391.0ZM1845.0 258.0 1855.0 264.0Q1865.0 270.0 1880.5 279.5Q1896.0 289.0 1913.5 300.5Q1931.0 312.0 1945.0 322.0Q1944.0 330.0 1937.5 335.0Q1931.0 340.0 1921.0 341.0L1651.0 372.0Q1660.0 448.0 1678.0 517.0Q1692.0 575.0 1712.0 625.0Q1732.0 589.0 1750.0 552.0Q1784.0 477.0 1804.0 405.0L1922.0 448.0Q1918.0 456.0 1910.0 460.0Q1902.0 464.0 1882.0 463.0Q1846.0 554.0 1785.0 647.0Q1768.0 674.0 1748.0 700.0Q1792.0 777.0 1862.0 828.0Q1875.0 838.0 1881.5 837.5Q1888.0 837.0 1895.0 823.0Q1905.0 804.0 1919.5 770.5Q1934.0 737.0 1944.0 706.0L1956.0 708.0L1936.0 865.0Q1961.0 899.0 1965.5 916.5Q1970.0 934.0 1961.0 944.0Q1949.0 957.0 1931.5 959.0Q1914.0 961.0 1893.5 954.0Q1873.0 947.0 1853.5 935.0Q1834.0 923.0 1817.0 909.0Q1742.0 849.0 1692.0 766.0Q1665.0 795.0 1636.0 821.0Q1548.0 902.0 1429.0 957.0L1419.0 945.0Q1494.0 897.0 1557.0 833.0Q1615.0 774.0 1660.0 708.0Q1625.0 636.0 1604.0 550.0Q1583.0 470.0 1571.0 381.0L1423.0 398.0L1411.0 370.0L1568.0 352.0Q1565.0 331.0 1563.0 309.0Q1551.0 181.0 1551.0 41.0L1673.0 55.0Q1672.0 64.0 1664.0 71.5Q1656.0 79.0 1637.0 82.0Q1636.0 196.0 1645.0 307.0Q1646.0 325.0 1648.0 343.0L1802.0 326.0ZM1381.0 799.0V523.0H1167.0V799.0ZM1700.0 82.0Q1755.0 99.0 1786.5 121.5Q1818.0 144.0 1832.5 166.5Q1847.0 189.0 1847.5 209.0Q1848.0 229.0 1838.0 242.0Q1828.0 255.0 1812.0 256.5Q1796.0 258.0 1777.0 244.0Q1772.0 218.0 1758.0 189.5Q1744.0 161.0 1725.5 135.0Q1707.0 109.0 1690.0 89.0Z" fill="#A39B8E"/></svg>
@@ -495,8 +539,8 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-    <details class="acto" style="--tc:#9AA3AB">
-      <summary><svg class="mini" aria-hidden="true" focusable="false"></svg><span class="bar" aria-hidden="true"></span><span class="num">V</span><span class="atitle">Herencias sin cierre</span><span class="ameta">1995 - hoy / 3 fichas</span><span class="plus" aria-hidden="true">+</span></summary>
+    <details class="acto" data-s="5" style="--tc:#9AA3AB;--dmg:1">
+      <summary><span class="bar" aria-hidden="true"></span><span class="num">V</span><span class="atitle"><span class="sr">Herencias sin cierre</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:4.6;--dy:5.0;--r:4.2;--g:0.49;--a:39%;--b:30%" data-c="H">H</span><span class="ch" style="--i:1;--dx:2.1;--dy:4.5;--r:-8.7;--g:0.44;--a:27%;--b:37%" data-c="e">e</span><span class="ch" style="--i:2;--dx:-4.2;--dy:4.0;--r:-2.4;--g:0.35;--a:30%;--b:67%" data-c="r">r</span><span class="ch" style="--i:3;--dx:-2.4;--dy:5.9;--r:8.0;--g:0.45;--a:37%;--b:56%" data-c="e">e</span><span class="ch" style="--i:4;--dx:-4.6;--dy:1.6;--r:-4.6;--g:1.12;--a:54%;--b:32%" data-c="n">n</span><span class="ch" style="--i:5;--dx:-4.0;--dy:2.8;--r:5.4;--g:1.00;--a:34%;--b:65%" data-c="c">c</span><span class="ch" style="--i:6;--dx:-0.9;--dy:5.4;--r:-2.7;--g:1.14;--a:30%;--b:82%" data-c="i">i</span><span class="ch" style="--i:7;--dx:3.4;--dy:-1.7;--r:3.0;--g:0.98;--a:53%;--b:60%" data-c="a">a</span><span class="ch" style="--i:8;--dx:1.3;--dy:5.3;--r:8.9;--g:0.45;--a:51%;--b:41%" data-c="s">s</span></span> <span class="wd"><span class="ch" style="--i:9;--dx:-4.6;--dy:1.0;--r:-6.4;--g:0.44;--a:57%;--b:58%" data-c="s">s</span><span class="ch" style="--i:10;--dx:-4.2;--dy:-0.8;--r:-8.8;--g:0.99;--a:33%;--b:37%" data-c="i">i</span><span class="ch" style="--i:11;--dx:-4.3;--dy:3.0;--r:3.9;--g:0.84;--a:53%;--b:60%" data-c="n">n</span></span> <span class="wd"><span class="ch" style="--i:12;--dx:0.3;--dy:3.8;--r:-3.4;--g:1.02;--a:62%;--b:31%" data-c="c">c</span><span class="ch" style="--i:13;--dx:3.6;--dy:5.1;--r:6.1;--g:0.74;--a:51%;--b:75%" data-c="i">i</span><span class="ch" style="--i:14;--dx:2.3;--dy:2.6;--r:-8.5;--g:1.08;--a:30%;--b:79%" data-c="e">e</span><span class="ch" style="--i:15;--dx:-0.2;--dy:1.6;--r:-7.3;--g:0.79;--a:55%;--b:35%" data-c="r">r</span><span class="ch" style="--i:16;--dx:3.1;--dy:2.9;--r:-3.5;--g:0.78;--a:28%;--b:70%" data-c="r">r</span><span class="ch" style="--i:17;--dx:-4.3;--dy:3.2;--r:-1.5;--g:1.00;--a:28%;--b:54%" data-c="e">e</span></span></span></span><span class="ameta">1995 - hoy / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card" style="--span:6;--accent:#C9A63E">
           <svg class="glyph" aria-hidden="true" viewBox="0 0 2000 1000" preserveAspectRatio="xMaxYMax meet"><path d="M710.0 550.0 754.0 501.0 849.0 574.0Q844.0 581.0 832.5 586.5Q821.0 592.0 804.0 595.0V926.0Q804.0 929.0 792.0 935.0Q780.0 941.0 764.0 945.5Q748.0 950.0 734.0 950.0H721.0V873.0H282.0V931.0Q282.0 934.0 272.0 941.0Q262.0 948.0 246.0 953.5Q230.0 959.0 212.0 959.0H199.0V511.0L289.0 550.0ZM721.0 844.0V579.0H282.0V844.0ZM565.0 89.0Q561.0 98.0 546.0 103.0Q536.0 106.0 524.0 104.0Q497.0 134.0 460.0 168.0Q415.0 210.0 360.5 252.5Q306.0 295.0 249.0 334.0Q214.0 358.0 180.0 378.0Q208.0 378.0 242.0 376.0Q317.0 374.0 413.5 370.0Q510.0 366.0 618.0 360.0Q697.0 356.0 779.0 352.0Q770.0 340.0 759.0 327.0Q727.0 289.0 692.0 255.0Q657.0 221.0 624.0 196.0L634.0 186.0Q723.0 219.0 780.0 257.5Q837.0 296.0 868.5 334.0Q900.0 372.0 910.5 404.5Q921.0 437.0 915.0 459.0Q909.0 481.0 891.5 487.0Q874.0 493.0 851.0 479.0Q839.0 442.0 815.0 403.0Q806.0 389.0 796.0 375.0Q691.0 391.0 543.0 411.0Q369.0 434.0 156.0 457.0Q146.0 470.0 134.0 474.0L97.0 377.0L109.0 374.0Q121.0 372.0 129.0 366.0Q171.0 342.0 218.0 300.5Q265.0 259.0 310.0 211.5Q355.0 164.0 391.5 118.0Q428.0 72.0 450.0 37.0Z M1771.0 304.0 1815.0 257.0 1898.0 327.0Q1893.0 334.0 1883.0 338.0Q1873.0 342.0 1856.0 343.0Q1853.0 448.0 1849.0 532.0H1864.0L1906.0 467.0L1920.0 480.0Q1933.0 493.0 1951.0 511.0Q1969.0 529.0 1982.0 545.0Q1979.0 561.0 1956.0 561.0H1848.0Q1847.0 570.0 1847.0 579.0Q1842.0 679.0 1833.0 748.0Q1832.0 758.0 1830.0 767.0H1841.0L1881.0 707.0L1894.0 719.0Q1907.0 731.0 1925.5 747.5Q1944.0 764.0 1957.0 780.0Q1953.0 796.0 1932.0 796.0H1826.0Q1819.0 833.0 1811.0 859.0Q1798.0 901.0 1781.0 920.0Q1760.0 944.0 1731.0 953.0Q1702.0 962.0 1669.0 962.0Q1669.0 946.0 1666.5 933.0Q1664.0 920.0 1654.0 911.0Q1644.0 902.0 1622.5 895.0Q1601.0 888.0 1576.0 884.0V867.0Q1594.0 868.0 1616.0 870.0Q1638.0 872.0 1657.0 873.0Q1676.0 874.0 1686.0 874.0Q1710.0 874.0 1722.0 862.0Q1737.0 847.0 1748.0 796.0H1416.0L1383.0 835.0L1301.0 779.0Q1311.0 771.0 1327.0 763.0Q1333.0 760.0 1339.0 757.0Q1344.0 732.0 1350.0 701.0Q1358.0 651.0 1368.0 591.0Q1370.0 576.0 1372.0 561.0H1258.0L1250.0 532.0H1377.0Q1381.0 502.0 1385.0 471.0Q1393.0 411.0 1399.0 355.0Q1402.0 323.0 1405.0 296.0Q1395.0 309.0 1385.0 322.0Q1340.0 377.0 1287.0 417.0L1275.0 408.0Q1312.0 364.0 1343.5 302.0Q1375.0 240.0 1400.0 171.5Q1425.0 103.0 1438.0 40.0L1559.0 76.0Q1556.0 84.0 1548.0 87.0Q1540.0 90.0 1522.0 87.0Q1505.0 129.0 1482.0 173.0H1821.0L1871.0 107.0L1881.0 115.0Q1890.0 123.0 1904.0 134.5Q1918.0 146.0 1934.0 160.0Q1950.0 174.0 1963.0 187.0Q1960.0 203.0 1936.0 203.0H1466.0Q1465.0 204.0 1464.0 206.0Q1446.0 237.0 1426.0 267.0L1503.0 304.0ZM1773.0 561.0H1448.0Q1445.0 580.0 1442.0 598.0Q1433.0 654.0 1425.0 704.0Q1419.0 738.0 1413.0 767.0H1753.0Q1764.0 702.0 1771.0 592.0Q1772.0 577.0 1773.0 561.0ZM1452.0 532.0H1775.0Q1779.0 444.0 1781.0 333.0H1479.0Q1476.0 356.0 1473.0 383.0Q1467.0 432.0 1459.0 487.0Q1456.0 510.0 1452.0 532.0ZM1093.0 674.0Q1102.0 674.0 1106.5 671.0Q1111.0 668.0 1119.0 653.0Q1123.0 644.0 1127.0 635.5Q1131.0 627.0 1137.0 612.5Q1143.0 598.0 1154.0 571.5Q1165.0 545.0 1183.5 499.5Q1202.0 454.0 1230.0 384.5Q1258.0 315.0 1299.0 214.0L1317.0 219.0Q1306.0 256.0 1291.5 303.5Q1277.0 351.0 1261.5 400.5Q1246.0 450.0 1232.5 495.0Q1219.0 540.0 1209.0 574.0Q1199.0 608.0 1196.0 624.0Q1190.0 647.0 1185.5 670.5Q1181.0 694.0 1182.0 713.0Q1182.0 736.0 1190.5 760.5Q1199.0 785.0 1206.0 815.5Q1213.0 846.0 1211.0 888.0Q1210.0 922.0 1193.5 941.5Q1177.0 961.0 1148.0 961.0Q1134.0 961.0 1124.0 948.5Q1114.0 936.0 1110.0 911.0Q1119.0 860.0 1119.5 817.0Q1120.0 774.0 1114.5 745.5Q1109.0 717.0 1098.0 710.0Q1088.0 702.0 1076.5 699.0Q1065.0 696.0 1049.0 695.0V674.0ZM1110.0 47.0Q1168.0 54.0 1203.5 70.5Q1239.0 87.0 1256.0 107.5Q1273.0 128.0 1275.0 147.0Q1277.0 166.0 1267.5 179.5Q1258.0 193.0 1241.5 196.0Q1225.0 199.0 1204.0 186.0Q1197.0 163.0 1180.0 138.5Q1163.0 114.0 1142.0 92.5Q1121.0 71.0 1101.0 56.0ZM1043.0 278.0Q1098.0 283.0 1131.0 297.5Q1164.0 312.0 1180.0 330.5Q1196.0 349.0 1198.0 367.0Q1200.0 385.0 1190.0 398.0Q1180.0 411.0 1164.0 414.0Q1148.0 417.0 1128.0 405.0Q1121.0 384.0 1106.0 361.5Q1091.0 339.0 1071.5 319.0Q1052.0 299.0 1034.0 286.0ZM1533.0 582.0Q1581.0 598.0 1610.0 618.0Q1639.0 638.0 1652.0 658.0Q1665.0 678.0 1665.5 695.0Q1666.0 712.0 1657.5 723.0Q1649.0 734.0 1635.0 735.5Q1621.0 737.0 1605.0 725.0Q1601.0 703.0 1587.5 677.5Q1574.0 652.0 1556.5 629.0Q1539.0 606.0 1522.0 590.0ZM1551.0 363.0Q1607.0 380.0 1636.5 402.5Q1666.0 425.0 1675.0 446.5Q1684.0 468.0 1678.0 484.0Q1672.0 500.0 1657.5 504.5Q1643.0 509.0 1624.0 496.0Q1618.0 476.0 1604.0 452.5Q1590.0 429.0 1573.0 407.5Q1556.0 386.0 1540.0 371.0Z" fill="#C9A63E"/></svg>
@@ -530,8 +574,6 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-      </div>
-    </div>
   </section>
   <section class="wrap coleccion" id="coleccion" aria-labelledby="col-title">
     <p class="eyebrow mono rv" id="col-title">La colección editorial</p>
@@ -638,133 +680,48 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
     raf = requestAnimationFrame(tick);
   })();
 
-  // Fortaleza que se rompe con los actos
+
+  // Ceniza y brasas por acto
   (function(){
-    var NS='http://www.w3.org/2000/svg';
-    var host=document.getElementById('fort'); 
-    var acts=[].slice.call(document.querySelectorAll('details.acto'));
-    if(!acts.length) return;
-    var CAP=['Casi nueva','Rajada','Se desploman las torres','Muros abiertos','Trizas'];
-    var G=340, BH=11, BW=22;
-    function mkr(seed){return function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};}
-    // Region: x0,x1,y0,y1 (y0 = alto del muro, y1 = suelo), bias de caida, almenas
-    var REG=[
-      {x0:8,x1:30,y0:262,y1:G,b:.04,m:1},{x0:94,x1:104,y0:262,y1:G,b:.04,m:0},{x0:196,x1:206,y0:262,y1:G,b:.04,m:0},{x0:270,x1:292,y0:262,y1:G,b:.02,m:1},
-      {x0:30,x1:94,y0:170,y1:G,b:0,m:1},{x0:206,x1:270,y0:170,y1:G,b:-.07,m:1},
-      {x0:104,x1:196,y0:96,y1:G,b:.02,m:1},{x0:118,x1:182,y0:40,y1:96,b:-.05,m:1}
-    ];
-    function layout(){
-      var R=mkr(11),B=[];
-      REG.forEach(function(r){
-        var rows=Math.round((r.y1-r.y0)/BH);
-        for(var i=0;i<rows;i++){
-          var y=r.y0+i*BH,off=(i%2)?BW/2:0,x=r.x0-off;
-          while(x<r.x1){
-            var xa=Math.max(x,r.x0),xb=Math.min(x+BW,r.x1);
-            if(xb-xa>5){B.push({x:xa,y:y,w:xb-xa,h:BH,b:r.b});}
-            x+=BW;
-          }
+    if(reduce) return;
+    var CFG={3:{n:8,e:.85,burst:10},4:{n:22,e:.5,burst:28},5:{n:56,e:.14,burst:80}};
+    var dpr=Math.min(window.devicePixelRatio||1,2),sys=[];
+    function mk(S,burst){
+      var W=S.W,H=S.H,ember=Math.random()<S.cfg.e;
+      var p={x:Math.random()*W,y:burst?(S.by+Math.random()*Math.min(H-S.by,500)):Math.random()*H,vx:(Math.random()-.4)*.35,vy:-(.18+Math.random()*(ember?.9:.55)),s:1+Math.random()*(ember?2.2:2.6),a:.25+Math.random()*.6,ph:Math.random()*100,e:ember,life:burst?1:0,r:Math.random()*6,vr:(Math.random()-.5)*.05};
+      return p;
+    }
+    document.querySelectorAll('details.acto').forEach(function(d){
+      var s=+d.getAttribute('data-s'),cfg=CFG[s],cv=d.querySelector('canvas.ash'); if(!cfg||!cv) return;
+      var ctx=cv.getContext('2d'),S={d:d,cv:cv,ctx:ctx,cfg:cfg,P:[],W:0,H:0,by:0,on:false,raf:0};
+      function size(){
+        var r=d.getBoundingClientRect(),sm=d.querySelector('summary').getBoundingClientRect();
+        S.W=r.width;S.H=r.height;S.by=sm.height;cv.style.width=S.W+'px';cv.style.height=S.H+'px';cv.width=S.W*dpr;cv.height=S.H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+        var n=Math.round(cfg.n*(S.W<700?.5:1)*Math.max(.6,Math.min(2.2,S.H/260)));
+        while(S.P.length<n)S.P.push(mk(S,false)); S.P.length=Math.min(S.P.length,Math.max(n,0));
+      }
+      function tick(){
+        S.raf=0; if(!S.on)return;
+        ctx.clearRect(0,0,S.W,S.H);
+        for(var i=0;i<S.P.length;i++){
+          var p=S.P[i];
+          p.y+=p.vy;p.x+=p.vx+Math.sin((p.y+p.ph)/34)*.28;p.r+=p.vr;
+          if(p.life){p.life-=.004;if(p.life<=0){S.P.splice(i,1);i--;continue;}}
+          if(p.y<-10||p.x<-10||p.x>S.W+10){ if(p.life){S.P.splice(i,1);i--;} else {S.P[i]=mk(S,false);S.P[i].y=S.H+6;} continue; }
+          var k=Math.max(0,Math.min(1,p.y/S.H)),al=p.a*(.15+.85*k)*(p.life?Math.min(1,p.life*2):1);
+          ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);
+          ctx.fillStyle=p.e?'rgba(224,121,60,'+al+')':'rgba(190,182,168,'+(al*.7)+')';
+          ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*(p.e?1:1.7));ctx.restore();
         }
-        if(r.m){ // almenas
-          var mw=14,gap=10,x2=r.x0+2;
-          while(x2+mw<=r.x1-1){B.push({x:x2,y:r.y0-12,w:mw,h:12,b:r.b-.07});x2+=mw+gap;}
-        }
-      });
-      B.forEach(function(k){
-        var hn=(k.y-28)/(G-28);
-        k.th=Math.min(.97,Math.max(.1,.2+.7*hn+k.b+(R()-.5)*.14));
-        k.sl=(R()-.5)*5; k.rot=(R()-.5)*120; k.rs=(R()<.5?-1:1)*(1.5+R()*2.5);
-        var cx=k.x+k.w/2, mound=.5+.5*(1-Math.min(1,Math.abs(cx-150)/150));
-        var rest=G-k.h-R()*BH*2.2*mound;
-        k.dy=Math.max(0,rest-k.y); k.dx=(cx<150?-1:1)*R()*34+(R()-.5)*22;
-        k.win=false;
-      });
-      // ventanas encendidas en la torre central
-      [[126,130],[160,130],[126,174],[160,174],[143,66],[143,229]].forEach(function(p){
-        var best=null,bd=1e9;B.forEach(function(k){var d=Math.abs(k.x+k.w/2-p[0])+Math.abs(k.y+k.h/2-p[1]);if(d<bd&&k.h===BH){bd=d;best=k;}});
-        if(best)best.win=true;
-      });
-      // grietas
-      var C=[],cr=mkr(5);
-      [[150,100,150,230,.05],[120,120,110,300,.1],[182,150,196,330,.16],[60,180,52,300,.22],[236,176,250,310,.2],[150,50,160,92,.1],[130,235,170,300,.3],[40,262,20,336,.34],[84,200,92,330,.4],[222,200,214,326,.45],[150,240,138,336,.52]].forEach(function(c){
-        var x=c[0],y=c[1],pts=['M'+x+' '+y],n=7,dx=(c[2]-c[0])/n,dy=(c[3]-c[1])/n;
-        for(var i=1;i<=n;i++){pts.push('L'+(c[0]+dx*i+(cr()-.5)*9).toFixed(1)+' '+(c[1]+dy*i+(cr()-.5)*4).toFixed(1));}
-        C.push({d:pts.join(' '),s:c[4],th:.2+.7*(((c[1]+c[3])/2-28)/(G-28))-.05});
-      });
-      return {B:B,C:C};
-    }
-    var L=layout();
-    function ease(t){return t<0?0:t>1?1:t;}
-    function build(svg){
-      svg.setAttribute('viewBox','0 0 300 360');
-      var g0=document.createElementNS(NS,'g'),els=[],i;
-      var ground=document.createElementNS(NS,'path');ground.setAttribute('d','M0 '+G+'H300');ground.setAttribute('class','f-ground');svg.appendChild(ground);
-      L.B.forEach(function(k){
-        var r=document.createElementNS(NS,'rect');
-        r.setAttribute('x',k.x.toFixed(1));r.setAttribute('y',k.y);r.setAttribute('width',k.w.toFixed(1));r.setAttribute('height',k.h);
-        r.setAttribute('class',k.win?'f-b f-w':'f-b');svg.appendChild(r);els.push(r);
-      });
-      var cr=[];
-      L.C.forEach(function(c){
-        var p=document.createElementNS(NS,'path');p.setAttribute('d',c.d);p.setAttribute('class','f-c');p.setAttribute('pathLength','1');svg.appendChild(p);cr.push(p);
-      });
-      var fl=document.createElementNS(NS,'path');fl.setAttribute('d','M150 40V14M150 14L168 20L150 27');fl.setAttribute('class','f-flag');svg.appendChild(fl);
-      return {els:els,cr:cr,fl:fl};
-    }
-    function apply(S,D){
-      var B=L.B,i,k,e,p0,q,tx,ty,rot,qq;
-      for(i=0;i<B.length;i++){
-        k=B[i];e=S.els[i];
-        p0=ease((D-(k.th-.12))/.12); q=ease((D-k.th)/.15);
-        if(p0===0&&q===0){ if(e._on){e.removeAttribute('transform');e.style.opacity='';e._on=0;} if(k.win){e.style.opacity=String(1-ease((D-.1)/.22)*.9);} continue; }
-        qq=q*q; tx=k.sl*p0+k.dx*q; ty=k.dy*qq; rot=k.rs*p0+k.rot*q;
-        e.setAttribute('transform','translate('+tx.toFixed(1)+' '+ty.toFixed(1)+') rotate('+rot.toFixed(1)+' '+(k.x+k.w/2).toFixed(1)+' '+(k.y+k.h/2).toFixed(1)+')');
-        e.style.opacity=String(k.win?Math.max(.1,1-ease((D-.1)/.22)*.9):1-q*.42);e._on=1;
+        S.raf=requestAnimationFrame(tick);
       }
-      for(i=0;i<L.C.length;i++){
-        var c=L.C[i],on=ease((D-c.s)/.22),off=ease((D-(c.th-.04))/.06);
-        S.cr[i].style.strokeDashoffset=String(1-on);S.cr[i].style.opacity=String(1-off);
-      }
-      S.fl.style.opacity=String(1-ease((D-.16)/.1));
-    }
-    function dmgFor(i,t){return .04+.96*(i+t)/5;}
-    var mobile=window.matchMedia('(max-width:1099px)');
-    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var big=null,cap=document.getElementById('fort-cap'),capN=document.getElementById('fort-n');
-    if(host){big=build(host);}
-    // minis para pantallas estrechas: una por acto, estado fijo
-    var minis=[].slice.call(document.querySelectorAll('.mini'));
-    var built=false;
-    function buildMinis(){
-      if(built||!minis.length)return;built=true;
-      minis.forEach(function(m,i){var S=build(m);apply(S,dmgFor(i,.5));});
-    }
-    function check(){ if(mobile.matches)buildMinis(); }
-    mobile.addEventListener&&mobile.addEventListener('change',check);check();
-    // estado actual segun el acto bajo la linea de lectura
-    var cur=0,tgt=0,raf=0,idx=-1;
-    function target(){
-      var y=innerHeight*.55,i=0,t=0,hit=false,r;
-      for(var a=0;a<acts.length;a++){
-        r=acts[a].getBoundingClientRect();
-        if(y<r.top){ if(a===0){i=0;t=0;hit=true;} else {i=a;t=0;hit=true;} break; }
-        if(y<=r.bottom){i=a;t=(y-r.top)/Math.max(1,r.height);hit=true;break;}
-      }
-      if(!hit){i=acts.length-1;t=1;}
-      if(reduce)t=.5;
-      return {i:i,d:dmgFor(i,t)};
-    }
-    function loop(){
-      raf=0;var T=target();tgt=T.d;
-      if(!reduce){cur+=(tgt-cur)*.09; if(Math.abs(tgt-cur)<.0006)cur=tgt;} else cur=tgt;
-      if(big){apply(big,cur);host.parentNode.style.setProperty('--dmg',cur.toFixed(3));}
-      if(T.i!==idx){idx=T.i;if(cap){cap.textContent=CAP[idx];capN.textContent='Acto '+['I','II','III','IV','V'][idx];}}
-      if(cur!==tgt)raf=requestAnimationFrame(loop);
-    }
-    function kick(){if(!raf)raf=requestAnimationFrame(loop);}
-    window.addEventListener('scroll',kick,{passive:true});window.addEventListener('resize',kick);
-    document.querySelectorAll('details.acto').forEach(function(d){d.addEventListener('toggle',function(){setTimeout(kick,30);});});
-    kick();
+      function kick(){ if(S.on&&!S.raf)S.raf=requestAnimationFrame(tick); }
+      size();
+      if('IntersectionObserver' in window){ new IntersectionObserver(function(e){S.on=e[0].isIntersecting;kick();}).observe(d); } else {S.on=true;kick();}
+      if('ResizeObserver' in window){ new ResizeObserver(function(){size();}).observe(d); } else {window.addEventListener('resize',size);}
+      d.addEventListener('toggle',function(){ setTimeout(function(){size(); if(d.open){for(var i=0;i<cfg.burst;i++)S.P.push(mk(S,true));} kick();},60); });
+      if(d.open){ setTimeout(function(){size();for(var i=0;i<cfg.burst;i++)S.P.push(mk(S,true));},400); }
+    });
   })();
 
   // Hilo de lectura
