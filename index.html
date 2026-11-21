@@ -201,7 +201,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .acto[data-s="2"]{--ink:var(--hueso);--sh:0}
   .acto[data-s="3"]{--ink:var(--escoria);--sh:.5}
   .acto[data-s="4"]{--ink:#B4AC9E;--sh:.9}
-  .acto[data-s="5"]{--ink:#A29B8D;--sh:1.3}
+  .acto[data-s="5"]{--ink:#B6AFA1;--sh:.8}
   .atitle{position:relative;color:var(--ink)}
   .acto:not([data-s="1"]) .atitle{flex:0 1 auto}
   .acto:not([data-s="1"]) .ameta{margin-left:auto}
@@ -225,9 +225,9 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
   .acto[data-s="3"] .ch::before,.acto[data-s="3"] .ch::after,.acto[data-s="4"] .ch::before,.acto[data-s="4"] .ch::after,.acto[data-s="5"] .ch::before,.acto[data-s="5"] .ch::after{content:attr(data-c);position:absolute;left:0;top:0;color:var(--ink);transition:transform 1.2s var(--ease-ed)}
   .ch::before{clip-path:polygon(-30% -60%,var(--a) -60%,var(--b) 160%,-30% 160%);transform:translate(calc(var(--dx) * var(--sh) * -.3px),calc(var(--dy) * var(--sh) * -.14px)) rotate(calc(var(--r) * var(--sh) * -.25deg))}
   .ch::after{clip-path:polygon(var(--a) -60%,130% -60%,130% 160%,var(--b) 160%);transform:translate(calc(var(--dx) * var(--sh) * .3px),calc(var(--dy) * var(--sh) * .45px)) rotate(calc(var(--r) * var(--sh) * .3deg))}
-  @media (hover:hover){.acto summary:hover .ch{--ink:#fff}.acto[data-s="5"] summary:hover .ch{--ink:#B5AE9F}}
+  @media (hover:hover){.acto summary:hover .ch{--ink:#fff}.acto[data-s="5"] summary:hover .ch{--ink:#CFC8BC}}
   .num{color:var(--ink)}
-  .acto[data-s="5"] .num{opacity:.6}
+  .acto[data-s="5"] .num{opacity:.7}
   /* la barra de color tambien se rompe */
   .acto[data-s="2"] .bar{background:linear-gradient(90deg,var(--tc) 0 46%,transparent 46% 48.5%,var(--tc) 48.5% 100%)}
   .acto[data-s="3"] .bar{background:linear-gradient(90deg,var(--tc) 0 38%,transparent 38% 42%,var(--tc) 42% 100%);clip-path:polygon(0 0,38% 0,36% 100%,0 100%)}
@@ -539,7 +539,7 @@ if(!reduce&&(!seen||force)){d.classList.add('intro-on')}})();
         </article>
       </div>
     </details>
-    <details class="acto" data-s="5" style="--tc:#9AA3AB;--dmg:1">
+    <details class="acto" data-s="5" style="--tc:#9AA3AB;--dmg:0.8">
       <summary><span class="bar" aria-hidden="true"></span><span class="num">V</span><span class="atitle"><span class="sr">Herencias sin cierre</span><span aria-hidden="true"><span class="wd"><span class="ch" style="--i:0;--dx:4.6;--dy:5.0;--r:4.2;--g:0.49;--a:39%;--b:30%" data-c="H">H</span><span class="ch" style="--i:1;--dx:2.1;--dy:4.5;--r:-8.7;--g:0.44;--a:27%;--b:37%" data-c="e">e</span><span class="ch" style="--i:2;--dx:-4.2;--dy:4.0;--r:-2.4;--g:0.35;--a:30%;--b:67%" data-c="r">r</span><span class="ch" style="--i:3;--dx:-2.4;--dy:5.9;--r:8.0;--g:0.45;--a:37%;--b:56%" data-c="e">e</span><span class="ch" style="--i:4;--dx:-4.6;--dy:1.6;--r:-4.6;--g:1.12;--a:54%;--b:32%" data-c="n">n</span><span class="ch" style="--i:5;--dx:-4.0;--dy:2.8;--r:5.4;--g:1.00;--a:34%;--b:65%" data-c="c">c</span><span class="ch" style="--i:6;--dx:-0.9;--dy:5.4;--r:-2.7;--g:1.14;--a:30%;--b:82%" data-c="i">i</span><span class="ch" style="--i:7;--dx:3.4;--dy:-1.7;--r:3.0;--g:0.98;--a:53%;--b:60%" data-c="a">a</span><span class="ch" style="--i:8;--dx:1.3;--dy:5.3;--r:8.9;--g:0.45;--a:51%;--b:41%" data-c="s">s</span></span> <span class="wd"><span class="ch" style="--i:9;--dx:-4.6;--dy:1.0;--r:-6.4;--g:0.44;--a:57%;--b:58%" data-c="s">s</span><span class="ch" style="--i:10;--dx:-4.2;--dy:-0.8;--r:-8.8;--g:0.99;--a:33%;--b:37%" data-c="i">i</span><span class="ch" style="--i:11;--dx:-4.3;--dy:3.0;--r:3.9;--g:0.84;--a:53%;--b:60%" data-c="n">n</span></span> <span class="wd"><span class="ch" style="--i:12;--dx:0.3;--dy:3.8;--r:-3.4;--g:1.02;--a:62%;--b:31%" data-c="c">c</span><span class="ch" style="--i:13;--dx:3.6;--dy:5.1;--r:6.1;--g:0.74;--a:51%;--b:75%" data-c="i">i</span><span class="ch" style="--i:14;--dx:2.3;--dy:2.6;--r:-8.5;--g:1.08;--a:30%;--b:79%" data-c="e">e</span><span class="ch" style="--i:15;--dx:-0.2;--dy:1.6;--r:-7.3;--g:0.79;--a:55%;--b:35%" data-c="r">r</span><span class="ch" style="--i:16;--dx:3.1;--dy:2.9;--r:-3.5;--g:0.78;--a:28%;--b:70%" data-c="r">r</span><span class="ch" style="--i:17;--dx:-4.3;--dy:3.2;--r:-1.5;--g:1.00;--a:28%;--b:54%" data-c="e">e</span></span></span></span><span class="ameta">1995 - hoy / 3 fichas</span><span class="plus" aria-hidden="true">+</span><canvas class="ash" aria-hidden="true"></canvas></summary>
       <div class="grid">
         <article class="card" style="--span:6;--accent:#C9A63E">
